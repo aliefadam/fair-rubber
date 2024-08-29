@@ -1,0 +1,207 @@
+@import url("ckeditor_reset.css");
+
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+body::-webkit-scrollbar {
+    width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(6, 44, 182, 0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #1d4ed8;
+}
+
+.scroll-recently::-webkit-scrollbar {
+    width: 5px;
+}
+
+.scroll-recently::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-recently::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+}
+
+.modal-transaction-detail::-webkit-scrollbar,
+.modal-alamat::-webkit-scrollbar,
+.modal-daftar-alamat::-webkit-scrollbar,
+.styling-scrollbar::-webkit-scrollbar {
+    width: 7px;
+}
+
+.modal-transaction-detail::-webkit-scrollbar-track,
+.modal-alamat::-webkit-scrollbar-track,
+.modal-daftar-alamatt::-webkit-scrollbar-track,
+.styling-scrollbar::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.modal-transaction-detail::-webkit-scrollbar-thumb,
+.modal-alamat::-webkit-scrollbar-thumb,
+.modal-daftar-alamat::-webkit-scrollbar-thumb,
+.styling-scrollbar::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+}
+
+/* SELECT 2 */
+.select2-container {
+    width: 100% !important;
+}
+
+/* POPPINS STYLE */
+.poppins-thin {
+    font-family: "Poppins", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+}
+
+.poppins-extralight {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+}
+
+.poppins-light {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.poppins-medium {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.poppins-semibold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.poppins-bold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.poppins-extrabold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.poppins-black {
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+}
+
+.poppins-thin-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 100;
+    font-style: italic;
+}
+
+.poppins-extralight-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-style: italic;
+}
+
+.poppins-light-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.poppins-regular-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.poppins-medium-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.poppins-semibold-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.poppins-bold-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.poppins-extrabold-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-style: italic;
+}
+
+.poppins-black-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+}
+
+/* MAP */
+#map {
+    height: 400px;
+    width: 100%;
+    position: relative;
+}
+.controls {
+    margin: 10px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 38.5px;
+    outline: none;
+    width: 400px;
+    padding: 0 12px;
+    font-size: 15px;
+}
+#pac-input {
+    position: absolute;
+    top: -10000px;
+    left: 10px;
+    z-index: 5;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    padding: 0 12px;
+    width: 300px;
+}
+#pac-input-edit {
+    position: absolute;
+    top: -10000px;
+    left: 10px;
+    z-index: 5;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    padding: 0 12px;
+    width: 300px;
+}
