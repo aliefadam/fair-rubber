@@ -93,7 +93,7 @@
                                                                 <a href="{{route('admin.master.collector.addFarmer', 1)}}"
                                                                     class="text-slate-600 dark:text-white block font-Inter font-normal px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600
                                                                         dark:hover:text-white">
-                                                                    Detail Petani</a>
+                                                                    Tambah Petani</a>
                                                             </li>
                                                             <li>
                                                                 <a href="#"
