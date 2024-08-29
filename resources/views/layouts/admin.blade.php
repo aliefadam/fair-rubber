@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <link rel="icon" href="/img/icon-tab.png">
 
-    <title>Fair Rubber</title>
+    <title>Fair Rubber | {{ $title }}</title>
     {{-- <link rel="icon" type="image/png" href="/assets/images/logo/favicon.svg"> --}}
 
     {{-- Poppins Font --}}
