@@ -3,134 +3,211 @@
     <!-- BEGIN: Breadcrumb -->
     {{-- <x-breadcrum grandparent="Master" parent="Produk" :current="$title" :route="route('admin.master-data.brand.create')"></x-breadcrum> --}}
 
-
-    <div class="flex justify-between rtl:space-x-reverse items-center mb-5">
-
-        <div class="">
-            <ul class="m-0 p-0 list-none">
-                <li class="inline-block relative top-[3px] text-base text-primary-500">
-                    <a href="index.html">
-                        <iconify-icon icon="heroicons-outline:home"></iconify-icon>
-                        <iconify-icon icon="heroicons-outline:chevron-right"
-                            class="relative text-slate-500 text-sm rtl:rotate-180"></iconify-icon>
-                    </a>
-                </li>
-                <li class="inline-block relative text-sm text-primary-500 ">
-                    Master
-                    <iconify-icon icon="heroicons-outline:chevron-right"
-                        class="relative top-[3px] text-slate-500 rtl:rotate-180"></iconify-icon>
-                </li>
-                <li class="inline-block relative text-sm text-slate-500 dark:text-white">
-                    {{$title}}
-                </li>
-            </ul>
-        </div>
-
-        <div class="gap-5">
-            <a class="inline-flex justify-center px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-[25px]"
-                href="">
-                <span class="flex items-center">
-                    <iconify-icon class="text-xl ltr:mr-2 rtl:ml-2" icon="heroicons-outline:plus"></iconify-icon>
-                    <span>Tambah Data</span>
-                </span>
-            </a>
-        </div>
-
-    </div>
-
-    <!-- END: BreadCrumb -->
-    <div class="space-y-5">
-        <div class="card">
-            {{-- <header class=" card-header noborder">
-                <h4 class="text-2xl poppins-medium">{{ $title }}
-                </h4>
-            </header> --}}
-            <div class="card-body px-6 pb-6">
-                <div class="overflow-x-auto -mx-6 dashcode-data-table">
-                    <span class=" col-span-8  hidden"></span>
-                    <span class="  col-span-4 hidden"></span>
-                    <div class="inline-block min-w-full align-middle">
-                        <div class="overflow-hidden ">
-                            <table class="min-w-full divide-y divide-slate-100 table-fixed dark:divide-slate-700"
-                                id="data-table">
-                                <thead class=" border-t border-slate-100 dark:border-slate-800">
-                                    <tr>
-                                        <th scope="col" class=" table-th ">
-                                            No
-                                        </th>
-                                        <th scope="col" class=" table-th ">
-                                            Nama
-                                        </th>
-                                        <th scope="col" class=" table-th ">
-                                            Action
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
-                                    <tr>
-                                        <td class="table-td">1</td>
-                                        <td class="table-td ">
-                                            <div>
-                                                ACIP
-                                            </div>
-                                        </td>
-
-                                        <td class="table-td ">
-                                            <div>
-                                                <div class="relative">
-                                                    <div class="dropdown relative">
-                                                        <button class="text-xl text-center block w-full " type="button"
-                                                            id="tableDropdownMenuButton1" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            <iconify-icon
-                                                                icon="heroicons-outline:dots-vertical"></iconify-icon>
-                                                        </button>
-                                                        <ul
-                                                            class=" dropdown-menu min-w-[120px] absolute text-sm text-slate-700 dark:text-white hidden bg-white dark:bg-slate-700
-                                                                shadow z-[2] float-left overflow-hidden list-none text-left rounded-lg mt-1 m-0 bg-clip-padding border-none">
-
-                                                            <li>
-                                                                <a href="{{route('admin.master.collector.addFarmer', 1)}}"
-                                                                    class="text-slate-600 dark:text-white block font-Inter font-normal px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600
-                                                                        dark:hover:text-white">
-                                                                    Tambah Petani</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#"
-                                                                    class="text-slate-600 dark:text-white block font-Inter font-normal px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600
-                                                                        dark:hover:text-white">
-                                                                    Edit</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" onclick="del('')"
-                                                                    class="text-slate-600 dark:text-white block font-Inter font-normal px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600
-                                                                        dark:hover:text-white">
-                                                                    Delete</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+    <form action="" class="bg-white p-5">
+        <div class="grid grid-cols-2 gap-7">
+            <div class="">
+                <div class="mb-5">
+                    <label for="kode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Kode <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="kode" name="kode"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <div class="mb-5">
+                    <label for="nik" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        NIK
+                    </label>
+                    <input type="number" id="nik" name="nik"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <div class="mb-5">
+                    <label for="no_kk" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Nomor KK
+                    </label>
+                    <input type="number" id="no_kk" name="no_kk"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <div class="mb-5">
+                    <label for="nama" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Nama <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="nama" name="nama" required
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <div class="mb-6">
+                    <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Jenis Kelamin <span class="text-red-500">*</span>
+                    </label>
+                    <div class="mt-3 flex items-center gap-3">
+                        <div class="flex items-center">
+                            <input id="default-radio-1" type="radio" value="" name="gender"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="default-radio-1"
+                                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Laki-laki</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="default-radio-2" type="radio" value="" name="gender"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="default-radio-2"
+                                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Perempuan</label>
                         </div>
                     </div>
                 </div>
+                <div class="mb-5">
+                    <label for="ttl" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Tanggal Lahir <span class="text-red-500">*</span>
+                    </label>
+                    <input type="date" id="ttl" name="ttl" required
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <div class="mb-5">
+                    <label for="provinsi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Provinsi</label>
+                    <select id="provinsi" name="provinsi"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected>Pilih Provinsi</option>
+                    </select>
+                </div>
+                <div class="mb-5">
+                    <label for="kabupaten_kota" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Kabupaten/Kota</label>
+                    <select id="kabupaten_kota" name="kabupaten_kota"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected>Pilih Kabupaten/Kota</option>
+                    </select>
+                </div>
+                <div class="mb-5">
+                    <label for="kecamatan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Kecamatan</label>
+                    <select id="kecamatan" name="kecamatan"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected>Pilih Kecamatan</option>
+                    </select>
+                </div>
+                <div class="mb-5">
+                    <label for="kelurahan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Kelurahan</label>
+                    <select id="Kelurahan" name="kelurahan"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected>Pilih Kelurahan</option>
+                    </select>
+                </div>
+                <div class="mb-5">
+                    <label for="kelurahan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Desa <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="kelurahan" name="kelurahan"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <div class="mb-5">
+                    <label for="alamat" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Alamat Rumah <span class="text-red-500">*</span>
+                    </label>
+                    <textarea
+                        class="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        name="alamat" id="" cols="30" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="">
+                <div class="mb-5">
+                    <label for="anggota_sejak" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Anggota Sejak <span class="text-red-500">*</span>
+                    </label>
+                    <input type="date" id="anggota_sejak"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="name@flowbite.com" required />
+                </div>
+                <div class="mb-5">
+                    <label for="jumlah_kebun" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Jumlah Kebun
+                    </label>
+                    <input type="number" id="jumlah_kebun" name="jumlah_kebun"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <div class="mb-5">
+                    <label for="jumlah_kebun" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Total Luas Kebun (m<sup>2</sup>)
+                    </label>
+                    <input type="number" id="jumlah_kebun" name="jumlah_kebun"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <div class="mb-5">
+                    <label for="jumlah_pohon" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Jumlah Pohon
+                    </label>
+                    <input type="number" id="jumlah_pohon" name="jumlah_pohon"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <div class="mb-5">
+                    <label for="hasil_panen_seminggu"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Hasil Panen Seminggu
+                    </label>
+                    <input type="number" id="hasil_panen_seminggu" name="hasil_panen_seminggu"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <div class="mb-6">
+                    <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Kepemilikan Kebun
+                    </label>
+                    <div class="mt-3 flex items-center gap-3">
+                        <div class="flex items-center">
+                            <input id="milik-sendiri" type="radio" value="" name="kepemilikan_kebun"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="milik-sendiri"
+                                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Milik Sendiri</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="orang-lain" type="radio" value="" name="kepemilikan_kebun"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="orang-lain"
+                                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Orang Lain</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="sewa-lahan" type="radio" value="" name="kepemilikan_kebun"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="sewa-lahan" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sewa
+                                Lahan</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <label for="no_telephone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Nomor Telepon
+                    </label>
+                    <input type="number" id="no_telephone" name="no_telephone"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <div class="mb-5">
+                    <label for="bank" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Bank</label>
+                    <select id="bank" name="bank"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected>Pilih Bank</option>
+                    </select>
+                </div>
+                <div class="mb-5">
+                    <label for="no_rekening" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Nomor Rekening
+                    </label>
+                    <input type="number" id="no_rekening" name="no_rekening"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <div class="mb-5">
+                    <label for="nama_rekening" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Nama Rekening
+                    </label>
+                    <input type="text" id="nama_rekening" name="nama_rekening"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <div class="flex justify-end">
+                    <button type="button"
+                        class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Daftarkan</button>
+                </div>
             </div>
         </div>
-
-    </div>
+    </form>
 @endsection
 
 @section('more-script')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
-        integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-        // var urlDel = "/admin/master-data/brand/";
-        // var token = "{{ csrf_token() }}";
-    </script>
-    <script src="{{ asset('assets/js/stored.js') }}"></script>
 @endsection

@@ -5,7 +5,6 @@
 
 
     <div class="flex justify-between rtl:space-x-reverse items-center mb-5">
-
         <div class="">
             <ul class="m-0 p-0 list-none">
                 <li class="inline-block relative top-[3px] text-base text-primary-500">
@@ -21,14 +20,14 @@
                         class="relative top-[3px] text-slate-500 rtl:rotate-180"></iconify-icon>
                 </li>
                 <li class="inline-block relative text-sm text-slate-500 dark:text-white">
-                    {{$title}}
+                    {{ $title }}
                 </li>
             </ul>
         </div>
 
         <div class="gap-5">
             <a class="inline-flex justify-center px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-[25px]"
-                href="">
+                href="{{ route('admin.master.collector.create') }}">
                 <span class="flex items-center">
                     <iconify-icon class="text-xl ltr:mr-2 rtl:ml-2" icon="heroicons-outline:plus"></iconify-icon>
                     <span>Tambah Data</span>
@@ -75,7 +74,7 @@
                                             </div>
                                         </td>
 
-                                        <td class="table-td ">
+                                        <td class="table-td">
                                             <div>
                                                 <div class="relative">
                                                     <div class="dropdown relative">
@@ -90,10 +89,10 @@
                                                                 shadow z-[2] float-left overflow-hidden list-none text-left rounded-lg mt-1 m-0 bg-clip-padding border-none">
 
                                                             <li>
-                                                                <a href="{{route('admin.master.collector.addFarmer', 1)}}"
+                                                                <a href="{{ route('admin.master.collector.addFarmer', 1) }}"
                                                                     class="text-slate-600 dark:text-white block font-Inter font-normal px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600
                                                                         dark:hover:text-white">
-                                                                    Detail Petani</a>
+                                                                    Tambah Petani</a>
                                                             </li>
                                                             <li>
                                                                 <a href="#"

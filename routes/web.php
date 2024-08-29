@@ -14,7 +14,9 @@ Route::get("/admin", function () {
 
 Route::prefix("/admin")->group(function () {
     Route::get("/", function () {
-        return view("dashboard");
+        return view("dashboard", [
+            "title" => "Dashboard",
+        ]);
     })->name("admin.dashboard");
 
     Route::prefix("master")->group(function () {

@@ -13,7 +13,8 @@ class CollectorController extends Controller
     public function index()
     {
 
-        return view('master.collector.index',
+        return view(
+            'master.collector.index',
             [
                 'title' => 'Anggota',
             ]
@@ -25,7 +26,9 @@ class CollectorController extends Controller
      */
     public function create()
     {
-        //
+        return view("master.collector.create", [
+            "title" => "Tambah Kolektor",
+        ]);
     }
 
     /**
@@ -70,6 +73,8 @@ class CollectorController extends Controller
 
     public function addFarmer($id)
     {
-        return;
+        return view("master.collector.add-farmer", [
+            "title" => "Tambah Petani",
+        ]);
     }
 }
