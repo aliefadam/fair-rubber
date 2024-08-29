@@ -12,7 +12,12 @@ class CollectorController extends Controller
      */
     public function index()
     {
-        //
+
+        return view('master.collector.index',
+            [
+                'title' => 'Anggota',
+            ]
+        );
     }
 
     /**
