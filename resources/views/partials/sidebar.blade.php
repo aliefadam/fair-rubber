@@ -4,12 +4,12 @@
     </div>
     <div class="logo-segment">
         <a class="flex items-center" href="index.html">
-            {{-- <img src="/assets/images/logo/logo-c.svg" class="black_logo" alt="logo"> --}}
+            <img src="/imgs/logo.jpg" class="black_logo size-[35px] rounded-full shadow-lg" alt="logo">
             {{-- <img src="/img/icon-tab.png" class="black_logo w-[30px]" alt="logo">
             <img src="/img/icon-tab.png" class="white_logo w-[30px]" alt="logo"> --}}
             {{-- <img src="/assets/images/logo/logo-c-white.svg" class="white_logo" alt="logo"> --}}
             {{-- <span class="ltr:ml-3 rtl:mr-3 text-xl font-Inter font-bold text-slate-900 dark:text-white">DashCode</span> --}}
-            <span class="ltr:ml-3 rtl:mr-3 text-xl font-Inter text-slate-900 dark:text-white poppins-bold">FAIR
+            <span class="ltr:ml-3 rtl:mr-3 text-xl font-Inter text-slate-900 dark:text-white poppins-black">FAIR
                 RUBBER</span>
         </a>
         <!-- Sidebar Type Button -->
@@ -60,8 +60,16 @@
             <li>
                 <a href="{{ route('admin.transaction.rubber-collected.index') }}" class="navItem">
                     <span class="flex items-center gap-2">
-                        <i class="fa-regular fa-users"></i>
+                        <i class="fa-regular fa-scale-unbalanced-flip"></i>
                         <span>Nota Timbangan</span>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.transaction.withdrawal.index') }}" class="navItem">
+                    <span class="flex items-center gap-2">
+                        <i class="fa-regular fa-money-from-bracket"></i>
+                        <span>Penarikan</span>
                     </span>
                 </a>
             </li>

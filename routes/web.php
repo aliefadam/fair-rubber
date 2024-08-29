@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CollectorController;
 use App\Http\Controllers\RubberCollectedController;
+use App\Http\Controllers\WithdrawalController;
 use App\Models\RubberCollected;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,8 @@ Route::prefix("/admin")->group(function () {
         Route::resource("rubber-collected", RubberCollectedController::class, [
             "as" => "admin.transaction",
         ]);
+        Route::resource("withdrawal", WithdrawalController::class, [
+            "as" => "admin.transaction",
+        ]);
     });
-
 });
