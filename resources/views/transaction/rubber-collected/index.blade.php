@@ -28,7 +28,7 @@
 
         <div class="gap-5">
             <a class="inline-flex justify-center px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-[25px]"
-                href="">
+                href="{{route('admin.transaction.rubber-collected.create')}}">
                 <span class="flex items-center">
                     <iconify-icon class="text-xl ltr:mr-2 rtl:ml-2" icon="heroicons-outline:plus"></iconify-icon>
                     <span>Tambah Data</span>
@@ -59,7 +59,16 @@
                                             No
                                         </th>
                                         <th scope="col" class=" table-th ">
-                                            Nama
+                                            Nama Kolektor
+                                        </th>
+                                        <th scope="col" class=" table-th ">
+                                            Desa
+                                        </th>
+                                        <th scope="col" class=" table-th ">
+                                            Tgl Penimbang Petani
+                                        </th>
+                                        <th scope="col" class=" table-th ">
+                                            Tgl Pengriman Karet
                                         </th>
                                         <th scope="col" class=" table-th ">
                                             Action
@@ -72,6 +81,21 @@
                                         <td class="table-td ">
                                             <div>
                                                 ACIP
+                                            </div>
+                                        </td>
+                                        <td class="table-td ">
+                                            <div>
+                                                Leuibumi
+                                            </div>
+                                        </td>
+                                        <td class="table-td ">
+                                            <div>
+                                                Rabu, 17 Agustus 1945
+                                            </div>
+                                        </td>
+                                        <td class="table-td ">
+                                            <div>
+                                                Rabu, 18 Agustus 1945
                                             </div>
                                         </td>
 

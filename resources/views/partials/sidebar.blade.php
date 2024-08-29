@@ -56,6 +56,15 @@
                     </span>
                 </a>
             </li>
+            <li class="sidebar-menu-title">Transaction</li>
+            <li>
+                <a href="{{ route('admin.transaction.rubber-collected.index') }}" class="navItem">
+                    <span class="flex items-center gap-2">
+                        <i class="fa-regular fa-users"></i>
+                        <span>Nota Timbangan</span>
+                    </span>
+                </a>
+            </li>
         </ul>
 
         {{-- @foreach (menu() as $el)

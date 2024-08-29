@@ -13,7 +13,8 @@ class CollectorController extends Controller
     public function index()
     {
 
-        return view('master.collector.index',
+        return view(
+            'master.collector.index',
             [
                 'title' => 'Anggota',
             ]
@@ -41,9 +42,23 @@ class CollectorController extends Controller
      */
     public function show(Collector $collector)
     {
-        //
+        return view(
+            'master.collector.show',
+            [
+                'title' => 'Anggota',
+            ]
+        );
     }
 
+    function dataDetail($id)
+    {
+        return view(
+            'master.collector.show',
+            [
+                'title' => 'Anggota',
+            ]
+        );
+    }
     /**
      * Show the form for editing the specified resource.
      */
