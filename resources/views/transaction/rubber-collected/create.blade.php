@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <div action="" class="bg-white dark:bg-slate-800 shadow-md rounded-lg p-5 mt-5">
+    <div class="mt-5">
         <div class="flex justify-between items-center">
             <h1 class="text-xl font-medium ">Data Anggota Petani</h1>
             <a class="inline-flex justify-center px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-[25px]"
