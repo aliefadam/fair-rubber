@@ -3,7 +3,7 @@
     <!-- BEGIN: Breadcrumb -->
     {{-- <x-breadcrum grandparent="Master" parent="Produk" :current="$title" :route="route('admin.master-data.brand.create')"></x-breadcrum> --}}
 
-    <form action="" class="bg-white p-5">
+    <form action="" class="bg-white dark:bg-slate-800 shadow-md rounded-lg p-5">
         <div class="grid grid-cols-2 gap-7">
             <div class="">
                 <div class="mb-5">

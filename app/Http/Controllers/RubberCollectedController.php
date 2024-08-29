@@ -27,7 +27,12 @@ class RubberCollectedController extends Controller
      */
     public function create()
     {
-        //
+        return view(
+            'transaction.rubber-collected.create',
+            [
+                'title' => 'Input Nota Timbangan',
+            ]
+        );
     }
 
     /**
