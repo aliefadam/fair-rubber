@@ -42,4 +42,8 @@ Route::prefix("/admin")->group(function () {
             "as" => "admin.transaction",
         ]);
     });
+
+    Route::get("/admin/transaction/withdrawal/print", function () {
+        return view("transaction.withdrawal.print");
+    })->name("admin.transaction.withdrawal.print");
 });

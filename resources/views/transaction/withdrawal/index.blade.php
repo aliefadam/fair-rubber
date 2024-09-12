@@ -108,7 +108,12 @@
                                         <td class="table-td">Rp 500,000</td>
                                         <td class="table-td">
                                             <div class="flex gap-3">
-                                                <i class="fa-regular fa-trash"></i>
+                                                <a href="">
+                                                    <i class="fa-regular fa-trash"></i>
+                                                </a>
+                                                <a href="{{ route('admin.transaction.withdrawal.print') }}" target="_blank">
+                                                    <i class="fa-regular fa-print "></i>
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
@@ -129,7 +134,12 @@
                                         <td class="table-td">Rp 500,000</td>
                                         <td class="table-td">
                                             <div class="flex gap-3">
-                                                <i class="fa-regular fa-trash"></i>
+                                                <a href="">
+                                                    <i class="fa-regular fa-trash"></i>
+                                                </a>
+                                                <a href="{{ route('admin.transaction.withdrawal.print') }}" target="_blank">
+                                                    <i class="fa-regular fa-print"></i>
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
