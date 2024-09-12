@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CollectorController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RubberCollectedController;
 use App\Http\Controllers\WithdrawalController;
 use App\Models\RubberCollected;
@@ -35,6 +36,9 @@ Route::prefix("/admin")->group(function () {
             "as" => "admin.transaction",
         ]);
         Route::resource("withdrawal", WithdrawalController::class, [
+            "as" => "admin.transaction",
+        ]);
+        Route::resource("report", ReportController::class, [
             "as" => "admin.transaction",
         ]);
     });
