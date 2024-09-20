@@ -66,10 +66,10 @@
                         Kota
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Kabupaten
+                        Kecamatan
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Kecamatan
+                        Kelurahan
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Desa
@@ -107,24 +107,24 @@
                         </td>
                         <td class="px-6 py-4">{{ $farmer->name }}</td>
                         <td class="px-6 py-4">{{ $farmer->nik }}</td>
-                        <td class="px-6 py-4">1234567890123456</td>
-                        <td class="px-6 py-4">081234567890</td>
-                        <td class="px-6 py-4">2022-01-15</td>
-                        <td class="px-6 py-4">Laki-laki</td>
-                        <td class="px-6 py-4">Bank BRI</td>
-                        <td class="px-6 py-4">Budi Santoso</td>
-                        <td class="px-6 py-4">1234567890</td>
-                        <td class="px-6 py-4">1980-05-10</td>
-                        <td class="px-6 py-4">Jawa Barat</td>
-                        <td class="px-6 py-4">Bandung</td>
-                        <td class="px-6 py-4">Kabupaten Bandung</td>
-                        <td class="px-6 py-4">Cimahi</td>
-                        <td class="px-6 py-4">Cimahi Selatan</td>
-                        <td class="px-6 py-4">3</td>
-                        <td class="px-6 py-4">2000</td>
-                        <td class="px-6 py-4">100</td>
-                        <td class="px-6 py-4">500 kg</td>
-                        <td class="px-6 py-4">Milik Sendiri</td>
+                        <td class="px-6 py-4">{{ $farmer->no_kk }}</td>
+                        <td class="px-6 py-4">{{ $farmer->phone }}</td>
+                        <td class="px-6 py-4">{{ $farmer->date_of_join }}</td>
+                        <td class="px-6 py-4">{{ getGender($farmer->gender) }}</td>
+                        <td class="px-6 py-4">{{ $farmer->bank_name }}</td>
+                        <td class="px-6 py-4">{{ $farmer->account_name }}</td>
+                        <td class="px-6 py-4">{{ $farmer->account_number }}</td>
+                        <td class="px-6 py-4">{{ $farmer->birth_date }}</td>
+                        <td class="px-6 py-4">{{ $farmer->province_id }}</td>
+                        <td class="px-6 py-4">{{ $farmer->city_id }}</td>
+                        <td class="px-6 py-4">{{ $farmer->district_id }}</td>
+                        <td class="px-6 py-4">{{ $farmer->sub_district_id }}</td>
+                        <td class="px-6 py-4">{{ $farmer->village }}</td>
+                        <td class="px-6 py-4">{{ $farmer->number_of_garden }}</td>
+                        <td class="px-6 py-4">{{ $farmer->size_of_garden }}</td>
+                        <td class="px-6 py-4">{{ $farmer->number_of_tree }}</td>
+                        <td class="px-6 py-4">{{ $farmer->weekly_harvest }} kg</td>
+                        <td class="px-6 py-4">{{ $farmer->ownership_garden }}</td>
                         <td class="flex items-center px-6 py-4">
                             <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                             <a href="#"
