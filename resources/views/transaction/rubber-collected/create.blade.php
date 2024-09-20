@@ -172,6 +172,24 @@
                     <tr
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th class="px-6 py-4 text-end" colspan="6">
+                            <p class="text-[15px] font-semibold"> Max Toleransi Kolektor </p>
+                        </th>
+                        <th class="px-6 py-4 text-end">
+                            <p class="text-[15px] font-semibold" >10%</p>
+                        </th>
+                    </tr>
+                    <tr
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <th class="px-6 py-4 text-end" colspan="6">
+                            <p class="text-[15px] font-semibold"> Toleransi Timbangan </p>
+                        </th>
+                        <th class="px-6 py-4 text-end">
+                            <p class="text-[15px] font-semibold" id="tolerance-current"></p>
+                        </th>
+                    </tr>
+                    <tr
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <th class="px-6 py-4 text-end" colspan="6">
                             <p class="text-[15px] font-semibold"> Premi Petani </p>
                         </th>
                         <th class="px-6 py-4 text-end">
@@ -257,6 +275,8 @@
             if (inputTimbanganPabrik != 0) {
                 const findPercentage = Math.ceil(((totalTimbanganCollector - inputTimbanganPabrik) /
                     totalTimbanganCollector) * 100);
+                console.log(findPercentage);
+                $('#tolerance-current').html(findPercentage+'%');
                 $(".input-timbangan-collector").each((i, element) => {
                     const timbanganPabrik = Math.ceil(element.value - ((element.value * findPercentage) / 100));
                     const dapatToleransi = Math.ceil(element.value * maxToleransi / 100);

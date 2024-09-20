@@ -73,6 +73,14 @@
                     </span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin.transaction.report.index') }}" class="navItem">
+                    <span class="flex items-center gap-2">
+                        <i class="fa-regular fa-list"></i>
+                        <span>Laporan</span>
+                    </span>
+                </a>
+            </li>
         </ul>
 
         {{-- @foreach (menu() as $el)

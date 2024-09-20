@@ -40,6 +40,11 @@
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
 
+    <style>
+        .sidebar-wrapper{
+            z-index: 2;
+        }
+    </style>
     @yield('more-style')
     @vite('resources/css/app.css')
 </head>
