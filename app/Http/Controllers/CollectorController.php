@@ -132,7 +132,6 @@ class CollectorController extends Controller
             "gender" => $request->gender,
             "birth_date" => $request->ttl,
             "village" => $request->desa,
-            "address" => $request->alamat,
             "sub_district_id" => $request->kelurahan,
             "district_id" => $request->kecamatan,
             "city_id" => $request->kabupaten_kota,
