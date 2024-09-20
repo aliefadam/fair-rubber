@@ -13,6 +13,21 @@ return new class extends Migration
     {
         Schema::create('rubber_collecteds', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('collector_id');
+            $table->date('date');
+            $table->double('total_collector_scales');
+            $table->double('total_factory_scales');
+            $table->double('total_can_tolerate');
+            $table->double('total_honorarium_scales');
+            $table->double('max_tolerance_percentage');
+            $table->double('tolerance_percentage_scales');
+
+            $table->double('total_honorarium_farmer');
+            $table->double('total_honorarium_collector');
+
+            $table->text('description')->nullable();
+            $table->string('status');
+
             $table->timestamps();
         });
     }

@@ -15,12 +15,7 @@
                     class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option value="">Acip</option>
                 </select>
-                <div class="pt-5 customerInformation">
-                    <h6 class="pb-3 text-sm text-gray-800 font-bold">Informasi Kolektor</h6>
-                    <p class="text-sm dropNameCustomer text-gray-600 dark:text-gray-200">Acip</p>
-                    <p class="text-sm dropPhoneCustomer text-gray-600 dark:text-gray-200">Jl Wonosari No. 1 Surabaya</p>
-                    <p class="text-sm dropAddressCustomer text-gray-600 dark:text-gray-200">0821819192</p>
-                </div>
+              
             </div>
             <div class="mb-5">
                 <label for="nik" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -28,6 +23,22 @@
                 </label>
                 <input type="date" id="nik" name="nik"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+            </div>
+        </div>
+        <div class="grid grid-cols-2 w-full gap-7">
+            <div class="pt-5 customerInformation">
+                <h6 class="pb-3 text-sm text-gray-800 font-bold">Informasi Kolektor</h6>
+                <p class="text-sm dropNameCustomer text-gray-600 dark:text-gray-200">Acip</p>
+                <p class="text-sm dropPhoneCustomer text-gray-600 dark:text-gray-200">Jl Wonosari No. 1 Surabaya</p>
+                <p class="text-sm dropAddressCustomer text-gray-600 dark:text-gray-200">0821819192</p>
+            </div>
+            <div class="">
+
+                <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
+                <textarea id="message" rows="4" name="decsription"
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Write your thoughts here..."></textarea>
+
             </div>
         </div>
     </div>
@@ -175,7 +186,7 @@
                             <p class="text-[15px] font-semibold"> Max Toleransi Kolektor </p>
                         </th>
                         <th class="px-6 py-4 text-end">
-                            <p class="text-[15px] font-semibold" >10%</p>
+                            <p class="text-[15px] font-semibold">10%</p>
                         </th>
                     </tr>
                     <tr
@@ -276,7 +287,10 @@
                 const findPercentage = Math.ceil(((totalTimbanganCollector - inputTimbanganPabrik) /
                     totalTimbanganCollector) * 100);
                 console.log(findPercentage);
-                $('#tolerance-current').html(findPercentage+'%');
+                if (maxToleransi < findPercentage) {
+                    maxToleransi = findPercentage;
+                }
+                $('#tolerance-current').html(findPercentage + '%');
                 $(".input-timbangan-collector").each((i, element) => {
                     const timbanganPabrik = Math.ceil(element.value - ((element.value * findPercentage) / 100));
                     const dapatToleransi = Math.ceil(element.value * maxToleransi / 100);
