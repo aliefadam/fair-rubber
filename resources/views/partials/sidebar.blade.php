@@ -52,7 +52,7 @@
                 <a href="{{ route('admin.master.collector.index') }}" class="navItem">
                     <span class="flex items-center gap-2">
                         <i class="fa-regular fa-users"></i>
-                        <span>Anggota</span>
+                        <span>Kolektor</span>
                     </span>
                 </a>
             </li>

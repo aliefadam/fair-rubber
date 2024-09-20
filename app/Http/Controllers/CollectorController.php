@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Collector;
+use App\Models\Farmer;
 use Illuminate\Http\Request;
 
 class CollectorController extends Controller
@@ -16,7 +17,8 @@ class CollectorController extends Controller
         return view(
             'master.collector.index',
             [
-                'title' => 'Anggota',
+                'title' => 'Kolektor',
+                "collectors" => Collector::all(),
             ]
         );
     }
@@ -36,7 +38,33 @@ class CollectorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newCollector = [
+            "code" => $request->kode,
+            "nik" => $request->nik,
+            "no_kk" => $request->no_kk,
+            "name" => $request->nama,
+            "gender" => $request->gender,
+            "birth_date" => $request->ttl,
+            "village" => $request->desa,
+            "address" => $request->alamat,
+            "sub_district_id" => $request->kelurahan,
+            "district_id" => $request->kecamatan,
+            "city_id" => $request->kabupaten_kota,
+            "province_id" => $request->provinsi,
+            "date_of_join" => $request->anggota_sejak,
+            "number_of_garden" => $request->jumlah_kebun,
+            "size_of_garden" => $request->luas_kebun,
+            "number_of_tree" => $request->jumlah_pohon,
+            "weekly_harvest" => $request->hasil_panen_seminggu,
+            "ownership_garden" => $request->kepemilikan_kebun,
+            "phone" => $request->no_telephone,
+            "bank_name" => $request->bank,
+            "account_number" => $request->no_rekening,
+            "account_name" => $request->nama_rekening,
+        ];
+
+        Collector::create($newCollector);
+        return back();
     }
 
     /**
@@ -47,7 +75,7 @@ class CollectorController extends Controller
         return view(
             'master.collector.show',
             [
-                'title' => 'Anggota',
+                'title' => 'Koletor',
             ]
         );
     }
@@ -57,7 +85,8 @@ class CollectorController extends Controller
         return view(
             'master.collector.show',
             [
-                'title' => 'Anggota',
+                'title' => 'Detail Koletor',
+                "collector" => Collector::find($id),
             ]
         );
     }
@@ -89,6 +118,38 @@ class CollectorController extends Controller
     {
         return view("master.collector.add-farmer", [
             "title" => "Tambah Petani",
+            "collector" => Collector::find($id),
         ]);
+    }
+
+    public function storeFarmer(Request $request, $id)
+    {
+        $newFarmer = [
+            "collector_id" => $request->collector_id,
+            "name" => $request->nama,
+            "nik" => $request->nik,
+            "no_kk" => $request->no_kk,
+            "gender" => $request->gender,
+            "birth_date" => $request->ttl,
+            "village" => $request->desa,
+            "address" => $request->alamat,
+            "sub_district_id" => $request->kelurahan,
+            "district_id" => $request->kecamatan,
+            "city_id" => $request->kabupaten_kota,
+            "province_id" => $request->provinsi,
+            "date_of_join" => $request->anggota_sejak,
+            "number_of_garden" => $request->jumlah_kebun,
+            "size_of_garden" => $request->luas_kebun,
+            "number_of_tree" => $request->jumlah_pohon,
+            "weekly_harvest" => $request->hasil_panen_seminggu,
+            "ownership_garden" => $request->kepemilikan_kebun,
+            "phone" => $request->no_telephone,
+            "bank_name" => $request->bank,
+            "account_number" => $request->no_rekening,
+            "account_name" => $request->nama_rekening,
+        ];
+
+        Farmer::create($newFarmer);
+        return back();
     }
 }

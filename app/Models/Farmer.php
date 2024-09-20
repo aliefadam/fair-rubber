@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Collector extends Model
+class Farmer extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $guarded = ["id"];
 
-    public function farmers()
+    public function collector()
     {
-        return $this->hasMany(Farmer::class);
+        return $this->belongsTo(Collector::class);
     }
 }

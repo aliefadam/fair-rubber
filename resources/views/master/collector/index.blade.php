@@ -61,63 +61,75 @@
                                             Nama
                                         </th>
                                         <th scope="col" class=" table-th ">
+                                            Desa
+                                        </th>
+                                        <th scope="col" class=" table-th ">
+                                            Total Petani
+                                        </th>
+                                        <th scope="col" class=" table-th ">
                                             Action
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
-                                    <tr>
-                                        <td class="table-td">1</td>
-                                        <td class="table-td ">
-                                            <div>
-                                                ACIP
-                                            </div>
-                                        </td>
+                                    @foreach ($collectors as $collector)
+                                        <tr>
+                                            <td class="table-td">1</td>
+                                            <td class="table-td ">
+                                                {{ $collector->name }}
+                                            </td>
+                                            <td class="table-td ">
+                                                {{ $collector->village }}
+                                            </td>
+                                            <td class="table-td ">
+                                                {{ $collector->farmers->count() }}
+                                            </td>
 
-                                        <td class="table-td">
-                                            <div>
-                                                <div class="relative">
-                                                    <div class="dropdown relative">
-                                                        <button class="text-xl text-center block w-full " type="button"
-                                                            id="tableDropdownMenuButton1" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            <iconify-icon
-                                                                icon="heroicons-outline:dots-vertical"></iconify-icon>
-                                                        </button>
-                                                        <ul
-                                                            class=" dropdown-menu min-w-[120px] absolute text-sm text-slate-700 dark:text-white hidden bg-white dark:bg-slate-700
+                                            <td class="table-td">
+                                                <div>
+                                                    <div class="relative">
+                                                        <div class="dropdown relative">
+                                                            <button class="text-xl text-center block w-full " type="button"
+                                                                id="tableDropdownMenuButton1" data-bs-toggle="dropdown"
+                                                                aria-expanded="false">
+                                                                <iconify-icon
+                                                                    icon="heroicons-outline:dots-vertical"></iconify-icon>
+                                                            </button>
+                                                            <ul
+                                                                class=" dropdown-menu min-w-[120px] absolute text-sm text-slate-700 dark:text-white hidden bg-white dark:bg-slate-700
                                                                 shadow z-[2] float-left overflow-hidden list-none text-left rounded-lg mt-1 m-0 bg-clip-padding border-none">
 
-                                                            <li>
-                                                                <a href="{{ route('admin.master.collector.addFarmer', 1) }}"
-                                                                    class="text-slate-600 dark:text-white block font-Inter font-normal px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600
+                                                                <li>
+                                                                    <a href="{{ route('admin.master.collector.addFarmer', $collector->id) }}"
+                                                                        class="text-slate-600 dark:text-white block font-Inter font-normal px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600
                                                                             dark:hover:text-white">
-                                                                    Tambah Petani</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="{{ route('admin.master.collector.data-detail', 1) }}"
-                                                                    class="text-slate-600 dark:text-white block font-Inter font-normal px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600
+                                                                        Tambah Petani</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="{{ route('admin.master.collector.data-detail', $collector->id) }}"
+                                                                        class="text-slate-600 dark:text-white block font-Inter font-normal px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600
                                                                             dark:hover:text-white">
-                                                                    Lihat</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#"
-                                                                    class="text-slate-600 dark:text-white block font-Inter font-normal px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600
+                                                                        Lihat</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#"
+                                                                        class="text-slate-600 dark:text-white block font-Inter font-normal px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600
                                                                         dark:hover:text-white">
-                                                                    Edit</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" onclick="del('')"
-                                                                    class="text-slate-600 dark:text-white block font-Inter font-normal px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600
+                                                                        Edit</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" onclick="del('')"
+                                                                        class="text-slate-600 dark:text-white block font-Inter font-normal px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600
                                                                         dark:hover:text-white">
-                                                                    Delete</a>
-                                                            </li>
-                                                        </ul>
+                                                                        Delete</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

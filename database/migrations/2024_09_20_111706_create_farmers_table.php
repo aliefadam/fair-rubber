@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('collectors', function (Blueprint $table) {
+        Schema::create('farmers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('collector_id');
             $table->string('name');
-            $table->string('code');
             $table->string('nik')->nullable();
             $table->string('no_kk')->nullable();
             $table->enum('gender', ['F', 'M']);
             $table->date('birth_date');
             $table->string('village');
-            $table->string('address');
             $table->unsignedBigInteger('sub_district_id');
             $table->unsignedBigInteger('district_id');
             $table->unsignedBigInteger('city_id');
@@ -35,7 +34,6 @@ return new class extends Migration
             $table->string('bank_name');
             $table->string('account_number');
             $table->string('account_name');
-            $table->double('tolerance')->default(0);
             $table->timestamps();
         });
     }
@@ -45,6 +43,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('collectors');
+        Schema::dropIfExists('farmers');
     }
 };

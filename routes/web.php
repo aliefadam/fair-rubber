@@ -27,6 +27,7 @@ Route::prefix("/admin")->group(function () {
             "as" => "admin.master",
         ]);
         Route::get("data/collector/add-farmer/{id}", [CollectorController::class, "addFarmer"])->name("admin.master.collector.addFarmer");
+        Route::post("data/collector/store-farmer/{id}", [CollectorController::class, "storeFarmer"])->name("admin.master.collector.storeFarmer");
         Route::get("data/collector/data-detail/{id}", [CollectorController::class, "dataDetail"])->name("admin.master.collector.data-detail");
     });
 
