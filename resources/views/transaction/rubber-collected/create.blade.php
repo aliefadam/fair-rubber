@@ -280,16 +280,18 @@
         }
 
         function calc() {
-            const maxToleransi = 10;
+            var maxToleransi = 10;
             const inputTimbanganPabrik = +$(".input-timbangan-pabrik").val();
             const totalTimbanganCollector = +$("#total-timbangan-collector").html();
             if (inputTimbanganPabrik != 0) {
-                const findPercentage = Math.ceil(((totalTimbanganCollector - inputTimbanganPabrik) /
+                var findPercentage = Math.ceil(((totalTimbanganCollector - inputTimbanganPabrik) /
                     totalTimbanganCollector) * 100);
                 console.log(findPercentage);
+
                 if (maxToleransi < findPercentage) {
                     maxToleransi = findPercentage;
                 }
+
                 $('#tolerance-current').html(findPercentage + '%');
                 $(".input-timbangan-collector").each((i, element) => {
                     const timbanganPabrik = Math.ceil(element.value - ((element.value * findPercentage) / 100));

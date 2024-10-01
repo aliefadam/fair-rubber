@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\RubberCollected;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CollectorSeeder::class,
             FarmerSeeder::class,
+            RubberCollectedSeeder::class,
+            RubberCollectedDetailSeeder::class,
         ]);
     }
 }
