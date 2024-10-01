@@ -15,7 +15,7 @@
                     class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option value="">Acip</option>
                 </select>
-              
+
             </div>
             <div class="mb-5">
                 <label for="nik" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -229,114 +229,13 @@
 
 @section('more-script')
     <script>
-        $("#tambah-petani").click(tambahPetani);
-        $(".input-timbangan-collector").on("input", calcTotalCollector);
-        $(".input-timbangan-pabrik").on("input", calc);
+        $(".input-timbangan-collector").on("input", totalTimbanganCollector);
 
-        function tambahPetani() {
-            $("#tbody-petani").append(`
-            <tr
-                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td class="px-6 py-4">3</td>
-                <td class="px-6 py-4"> <input type="text" id="kode" name="kode"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-                </td>
-                <td class="px-6 py-4">
-                    <input type="text" id="kode" name="kode"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-                </td>
-                <td class="px-6 py-4 flex justify-center">
-                    <input type="number" id="kode" name="kode"
-                        class="input-timbangan-collector text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-                </td>
-                <td class="px-6 py-4">
-                    <span class="timbangan-pabrik text-center block text-lg poppins-medium">0</span>
-                </td>
-                <td class="px-6 py-4">
-                    <span class="dapat-toleransi text-center block text-lg poppins-medium">0</span>
-                </td>
-                <td class="px-6 py-4">
-                    <span class="timbangan-premi text-center block text-lg poppins-medium">0</span>
-                </td>
-            </tr>
-            `);
-        }
-
-        function calcTotalCollector() {
-            const total = $(".input-timbangan-collector").map(function() {
-                if (this.value == "") {
-                    return 0;
-                }
-                return +this.value;
-            }).get().reduce(function(acc, curr) {
-                if (curr == NaN) {
-                    curr = 0;
-                }
-                return acc + curr;
-            }, 0);
-
+        function totalTimbanganCollector() {
+            const total = $(".input-timbangan-collector").get().map((input) => {
+                return +input.value;
+            }).reduce((acc, curr) => acc + curr);
             $("#total-timbangan-collector").html(total);
-            calc();
-        }
-
-        function calc() {
-            const maxToleransi = 10;
-            const inputTimbanganPabrik = +$(".input-timbangan-pabrik").val();
-            const totalTimbanganCollector = +$("#total-timbangan-collector").html();
-            if (inputTimbanganPabrik != 0) {
-                const findPercentage = Math.ceil(((totalTimbanganCollector - inputTimbanganPabrik) /
-                    totalTimbanganCollector) * 100);
-                console.log(findPercentage);
-                if (maxToleransi < findPercentage) {
-                    maxToleransi = findPercentage;
-                }
-                $('#tolerance-current').html(findPercentage + '%');
-                $(".input-timbangan-collector").each((i, element) => {
-                    const timbanganPabrik = Math.ceil(element.value - ((element.value * findPercentage) / 100));
-                    const dapatToleransi = Math.ceil(element.value * maxToleransi / 100);
-                    const timbanganPremi = timbanganPabrik + dapatToleransi;
-                    $(".timbangan-pabrik").eq(i).html(timbanganPabrik);
-                    $(".dapat-toleransi").eq(i).html(dapatToleransi);
-                    $(".timbangan-premi").eq(i).html(timbanganPremi);
-                    const totalDapatToleransi = $(".dapat-toleransi").map(function() {
-                        return +this.value;
-                    }).get().reduce(function(acc, curr) {
-                        return acc + curr;
-                    });
-                });
-                const totalDapatToleransi = $(".dapat-toleransi").map(function() {
-                    return +this.innerHTML;
-                }).get().reduce(function(acc, curr) {
-                    return acc + curr;
-                }, 0);
-                $("#total-dapat-toleransi").html(totalDapatToleransi);
-
-                const totalTimbanganPremi = $(".timbangan-premi").map(function() {
-                    return +this.innerHTML;
-                }).get().reduce(function(acc, curr) {
-                    return acc + curr;
-                }, 0);
-                $("#total-timbangan-premi").html(totalTimbanganPremi);
-
-                let premiPetani = 0;
-                let premiKolektor = 0;
-                if (findPercentage > maxToleransi) {
-                    premiPetani = totalTimbanganPremi * 2000;
-                    premiKolektor = totalTimbanganPremi * 500;
-                } else {
-                    premiPetani = totalTimbanganCollector * 2000;
-                    premiKolektor = totalTimbanganCollector * 500;
-                }
-
-                $("#premi-petani").html(new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR'
-                }).format(premiPetani));
-                $("#premi-collector").html(new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR'
-                }).format(premiKolektor));
-            }
         }
     </script>
 @endsection
