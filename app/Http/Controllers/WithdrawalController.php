@@ -67,6 +67,8 @@ class WithdrawalController extends Controller
             // loop data petani yaang ter-relasi dengan collector
             $lastIndex = 1;
             for ($j = 0; $j < count($collector[$i]->farmers); $j++) {
+                $lastIndex += $j;
+
                 $data[$i]['farmer'][$j]['id'] = $collector[$i]->farmers[$j]->id;
                 $data[$i]['farmer'][$j]['name'] = $collector[$i]->farmers[$j]->name;
                 $data[$i]['farmer'][$j]['village'] = $collector[$i]->farmers[$j]->village;
@@ -96,7 +98,6 @@ class WithdrawalController extends Controller
                         $paid_farmer += $collector[$i]->farmers[$j]->rubberCollectedDetail[$k]->honorarium_farmer;
                         $paid_kg_farmer += $collector[$i]->farmers[$j]->rubberCollectedDetail[$k]->used_scales;
                     }
-                    $lastIndex += $j;
                 }
 
                 // set variable untuk pertambahan petani
@@ -149,6 +150,8 @@ class WithdrawalController extends Controller
                 }
             }
 
+            $data[$i]['farmer'] = array_values($data[$i]['farmer']);
+
             $data[$i]['total_paid_collector'] = $total_paid_collector;
             $data[$i]['total_unpaid_collector'] = $total_unpaid_collector;
             $data[$i]['total_paid_farmer'] = $total_paid_farmer;
@@ -159,7 +162,7 @@ class WithdrawalController extends Controller
 
         // return $data[0]['farmer'][0]['name'];
 
-        return $data;
+        // return $data;
         return view("transaction.withdrawal.create", [
             "title" => "Lakukan Penarikan",
             'data' => $data,

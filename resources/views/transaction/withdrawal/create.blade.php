@@ -166,6 +166,9 @@
                                         <input type="text" id="website-admin"
                                             class="total_unpaid_farmer total_unpaid_farmer_{{ $data[$i]['collector_id'] }} rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
                                             placeholder="0" {{-- value="{{ formatMoney($data[$i]['total_unpaid_farmer']) }} "> --}}>
+                                        <input type="text" id="website-admin"
+                                            class="total_unpaid_farmer_all total_unpaid_farmer_all_{{ $data[$i]['collector_id'] }} rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
+                                            placeholder="0" {{-- value="{{ formatMoney($data[$i]['total_unpaid_farmer']) }} "> --}}>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
@@ -175,7 +178,7 @@
                                             Rp.
                                         </span>
                                         <input type="text" id="website-admin"
-                                            class="total_unpaid_collector rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
+                                            class="total_unpaid_collector total_unpaid_collector_{{ $data[$i]['collector_id'] }} rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
                                             placeholder="0"
                                             value="{{ formatMoney($data[$i]['total_unpaid_collector']) }}">
                                     </div>
@@ -487,6 +490,10 @@
                                             <th class="px-6 py-4 text-center">
                                                 <p class="text-[15px] font-semibold text-end">
                                                     {{ formatMoney($subTotalFarmerScalesUnpaid, true) }}</p>
+
+                                                <input type="hidden" name=""
+                                                    value="{{ formatMoney($subTotalFarmerScalesUnpaid) }}"
+                                                    class="dropHereFarmerTotalUnpaidAll dropHereFarmerTotalUnpaidAll_{{ $data[$i]['collector_id'] }}">
                                             </th>
                                             <th class="px-6 py-4 text-center">
                                                 <p class="text-[15px] font-semibold text-end">
@@ -562,50 +569,103 @@
 
 @section('more-script')
     <script>
-        $('.checked_farmer').change(function() {
-            // console.log();
+        $(document).ready(function() {
+            // Set semua checkbox menjadi checked
+            $('.checked_collector').prop('checked', true);
+            $('.checked_farmer').prop('checked', true);
 
-            // mengecek id kolektor yang berhubungan dengan farmer
-            var checkCollector = $(this).closest('.data-detail-farmer').find('.collector_id_per_farmer').val();
+            // Panggil fungsi perhitungan secara langsung setelah set checkbox
+            calculateFarmerUnpaid();
+            calc(); // Panggil perhitungan kolektor
 
-            // set variable untuk perhitungan
-            var totalFarmerUnpaidKg = 0;
-            var totalFarmerUnpaidTotal = 0;
+            // Trigger event change untuk menjalankan kalkulasi ulang
+            $('.checked_farmer').trigger('change');
+            $('.checked_collector').trigger('change');
 
-            // melakukan loop pada class checkbox pada farmer
-            $('.checked_farmer_' + checkCollector).each(function(i, obj) {
-
-                // mengecek apakah checkbox tersebut dipilih
-                if ($(this).prop('checked') == true) {
-                    // mencari class terdekat dengan checked_farmer yang bernama data-detail-farmer lalu mencari value dari class unpaid_kg_farmer_id_
-                    var unpaidKgRaw = parseFloat($(this).closest('.data-detail-farmer').find(
-                        '.unpaid_kg_farmer_id_' + checkCollector).val().replace(/\./g, '')) || 0;
-                    // menambahkan hasil nilai yang ada kedalam perhitungan 
-                    totalFarmerUnpaidKg += unpaidKgRaw;
-
-                    var unpaidTotalRaw = parseFloat($(this).closest('.data-detail-farmer').find(
-                        '.unpaid_farmer_id_' + checkCollector).val().replace(/\./g, '')) || 0;
-                    totalFarmerUnpaidTotal += unpaidTotalRaw;
-                }
+            // Fungsi onchange untuk checkbox checked_farmer
+            $('.checked_farmer').change(function() {
+                calculateFarmerUnpaid();
             });
 
-            // drop data hasil perhitungan kedalam class yang telah ditentukan
-            $('.dropHereFarmerTotalUnpaidKg_' + checkCollector).val(formatNumber(totalFarmerUnpaidKg));
-            $('.dropHereFarmerTotalUnpaidKg_' + checkCollector).html(formatNumber(totalFarmerUnpaidKg) + ' KG');
-            $('.dropHereFarmerTotalUnpaid_' + checkCollector).val(formatNumber(totalFarmerUnpaidTotal));
-            $('.dropHereFarmerTotalUnpaid_' + checkCollector).html(formatMoney(totalFarmerUnpaidTotal));
+            // Fungsi onchange untuk checkbox checked_collector
+            $('.checked_collector').change(function() {
+                calc();
+            });
 
-            $('.total_unpaid_kg_farmer_' + checkCollector).val(formatNumber(totalFarmerUnpaidKg) + ' KG');
-            $('.total_unpaid_farmer_' + checkCollector).val(formatNumber(totalFarmerUnpaidTotal));
+            // Fungsi untuk menghitung unpaid farmer
+            function calculateFarmerUnpaid() {
+                $('.checked_farmer').each(function() {
+                    var checkCollector = $(this).closest('.data-detail-farmer').find('.collector_id_per_farmer').val();
 
+                    var totalFarmerUnpaidKg = 0;
+                    var totalFarmerUnpaidTotal = 0;
 
-            calc();
+                    // Melakukan loop pada class checkbox pada farmer
+                    $('.checked_farmer_' + checkCollector).each(function(i, obj) {
+                        if ($(this).prop('checked') == true) {
+                            var unpaidKgRaw = parseFloat($(this).closest('.data-detail-farmer').find('.unpaid_kg_farmer_id_' + checkCollector).val().replace(/\./g, '')) || 0;
+                            totalFarmerUnpaidKg += unpaidKgRaw;
+
+                            var unpaidTotalRaw = parseFloat($(this).closest('.data-detail-farmer').find('.unpaid_farmer_id_' + checkCollector).val().replace(/\./g,'')) || 0;
+                            totalFarmerUnpaidTotal += unpaidTotalRaw;
+                        }
+                    });
+
+                    // Drop data hasil perhitungan ke dalam class yang ditentukan
+                    $('.dropHereFarmerTotalUnpaidKg_' + checkCollector).val(formatNumber(totalFarmerUnpaidKg));
+                    $('.dropHereFarmerTotalUnpaidKg_' + checkCollector).html(formatNumber(totalFarmerUnpaidKg) + ' KG');
+                    $('.dropHereFarmerTotalUnpaid_' + checkCollector).val(formatNumber(totalFarmerUnpaidTotal));
+                    $('.dropHereFarmerTotalUnpaid_' + checkCollector).html(formatMoney(totalFarmerUnpaidTotal));
+
+                    $('.total_unpaid_kg_farmer_' + checkCollector).val(formatNumber(totalFarmerUnpaidKg));
+                    $('.total_unpaid_farmer_' + checkCollector).val(formatNumber(totalFarmerUnpaidTotal));
+
+                    $('.total_unpaid_farmer_all_' + checkCollector).val($('.dropHereFarmerTotalUnpaidAll_' +checkCollector).val());
+
+                    // alert($('.dropHereFarmerTotalUnpaidAll_' +checkCollector).val());
+
+                    // percentage = (partial_value / total_value) * 100
+                    var percentageFarmerWithdrawn = (totalFarmerUnpaidTotal/$('.dropHereFarmerTotalUnpaidAll_' +checkCollector).val().replace(/\./g, '') || 0)*100;
+                    console.log(percentageFarmerWithdrawn);
+
+                    console.log($('.total_unpaid_collector_' +checkCollector).val().replace(/\./g, '') || 0);
+                    var percentageCollectorToWithdrawn = (totalFarmerUnpaidTotal/$('.dropHereFarmerTotalUnpaidAll_' +checkCollector).val().replace(/\./g, '') || 0)*100;
+                    console.log(percentageCollectorToWithdrawn);
+                    
+                    
+                    
+
+                });
+            }
+
+            // Fungsi kalkulasi untuk collector
+            function calc() {
+                var totalFarmerUnpaidKg = 0;
+                var totalFarmerUnpaidTotal = 0;
+                var totalCollectorUnpaidTotal = 0;
+
+                $('.checked_collector').each(function(i, obj) {
+                    if ($(this).prop('checked') == true) {
+                        var unpaidKgRaw = parseFloat($(this).closest('.data-detail-collector').find('.total_unpaid_kg_farmer').val().replace(/\./g, '')) || 0;
+                        totalFarmerUnpaidKg += unpaidKgRaw;
+
+                        var unpaidTotalRaw = parseFloat($(this).closest('.data-detail-collector').find('.total_unpaid_farmer').val().replace(/\./g, '')) || 0;
+                        totalFarmerUnpaidTotal += unpaidTotalRaw;
+
+                        var unpaidTotalCollectorRaw = parseFloat($(this).closest('.data-detail-collector').find('.total_unpaid_collector').val().replace(/\./g, '')) || 0;
+                        totalCollectorUnpaidTotal += unpaidTotalCollectorRaw;
+                    }
+                });
+
+                $('.totalFarmerScalesKgUnpaid').html(formatNumber(totalFarmerUnpaidKg) + ' KG');
+                $('.totalFarmerScalesKgUnpaidValue').val(formatNumber(totalFarmerUnpaidKg));
+                $('.totalFarmerScalesUnpaid').html(formatMoney(totalFarmerUnpaidTotal));
+                $('.totalFarmerScalesUnpaidValue').val(formatNumber(totalFarmerUnpaidTotal));
+                $('.totalCollectorScalesUnpaid').html(formatMoney(totalCollectorUnpaidTotal));
+                $('.totalCollectorScalesUnpaidValue').val(formatNumber(totalCollectorUnpaidTotal));
+            }
         });
 
-
-        $('.checked_collector').change(function() {
-            calc();
-        });
 
 
         // totalFarmerScalesKgUnpaidValue
@@ -615,45 +675,5 @@
         // totalFarmerScalesKgUnpaid
         // totalFarmerScalesUnpaid
         // totalCollectorScalesUnpaid
-
-        function calc() {
-
-            var totalFarmerUnpaidKg = 0;
-            var totalFarmerUnpaidTotal = 0;
-            var totalCollectorUnpaidTotal = 0;
-            // var checkCollector = $(this).closest('.data-detail-collector');
-            $('.checked_collector').each(function(i, obj) {
-
-                // mengecek apakah checkbox tersebut dipilih
-                if ($(this).prop('checked') == true) {
-
-                    // mencari class terdekat dengan checked_farmer yang bernama data-detail-farmer lalu mencari value dari class unpaid_kg_farmer_id_
-                    var unpaidKgRaw = parseFloat($(this).closest('.data-detail-collector').find(
-                        '.total_unpaid_kg_farmer').val().replace(/\./g, '')) || 0;
-                    // menambahkan hasil nilai yang ada kedalam perhitungan 
-                    totalFarmerUnpaidKg += unpaidKgRaw;
-
-                    var unpaidTotalRaw = parseFloat($(this).closest('.data-detail-collector').find(
-                        '.total_unpaid_farmer').val().replace(/\./g, '')) || 0;
-                    totalFarmerUnpaidTotal += unpaidTotalRaw;
-
-                    var unpaidTotalCollectorRaw = parseFloat($(this).closest('.data-detail-collector').find(
-                        '.total_unpaid_collector').val().replace(/\./g, '')) || 0;
-                    totalCollectorUnpaidTotal += unpaidTotalCollectorRaw;
-
-                }
-            });
-
-
-
-
-            $('.totalFarmerScalesKgUnpaid').html(formatNumber(totalFarmerUnpaidKg) + ' KG');
-            $('.totalFarmerScalesKgUnpaidValue').val(formatNumber(totalFarmerUnpaidKg));
-            $('.totalFarmerScalesUnpaid').html(formatMoney(totalFarmerUnpaidTotal));
-            $('.totalFarmerScalesUnpaidValue').val(formatNumber(totalFarmerUnpaidTotal));
-            $('.totalCollectorScalesUnpaid').html(formatMoney(totalCollectorUnpaidTotal));
-            $('.totalCollectorScalesUnpaidValue').val(formatNumber(totalCollectorUnpaidTotal));
-
-        }
     </script>
 @endsection
