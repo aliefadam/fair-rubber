@@ -26,6 +26,7 @@ return new class extends Migration
 
             $table->double('total_honorarium_farmer');
             $table->double('total_honorarium_collector');
+            $table->double('total_honorarium_collector_withdrawn');
 
             $table->text('description')->nullable();
             $table->string('status');

@@ -29,6 +29,7 @@ class RubberCollectedSeeder extends Seeder
 
             'total_honorarium_farmer'=>1660000,
             'total_honorarium_collector'=>415000,
+            'total_honorarium_collector_withdrawn'=>0,
 
             'description'=>1,
             // 'status'=>1, //1=belum dicarikan,2=sudah dicairkan
