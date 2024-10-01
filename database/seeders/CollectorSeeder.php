@@ -19,11 +19,11 @@ class CollectorSeeder extends Seeder
             "code" => "123",
             "nik" => "123",
             "no_kk" => "123",
-            "name" => "Toha",
+            "name" => "Acip",
             "gender" => "M",
             "birth_date" => "2000-01-01",
-            "village" => "Bandarejo",
-            "address" => "Bandarejo Tama 45",
+            "village" => "Kaduharayu",
+            "address" => "Kaduharayu Tama 45",
             "sub_district_id" => 1,
             "district_id" => 1,
             "city_id" => 1,
@@ -37,7 +37,7 @@ class CollectorSeeder extends Seeder
             "phone" => "081234567890",
             "bank_name" => "BCA",
             "account_number" => "1234567890",
-            "account_name" => "Toha",
+            "account_name" => "Acip",
         ]);
     }
 }

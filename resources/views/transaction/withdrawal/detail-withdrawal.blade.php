@@ -2,7 +2,6 @@
 @section('content')
     <!-- BEGIN: Breadcrumb -->
     {{-- <x-breadcrum grandparent="Master" parent="Produk" :current="$title" :route="route('admin.master-data.brand.create')"></x-breadcrum> --}}
-
     <div action="" class="bg-white dark:bg-slate-800 shadow-md rounded-lg p-5">
         <h1 class="text-xl font-medium ">Filter Tanggal</h1>
         <br>
@@ -10,30 +9,25 @@
 
             <div class="flex items-end gap-7">
                 <div class="flex-[4]">
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-                        Mulai</label>
-                    <input type="date" name="date_start" id="email"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        value="{{ request()->date_start }}" required />
+
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload
+                        file</label>
+                    <input
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        id="file_input" type="file">
+
                 </div>
-                <div class="flex-[4]">
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Akhir
-                    </label>
-                    <input type="date" name="date_end" id="email"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        value="{{ request()->date_end }}" required />
-                </div>
+
                 <div class="flex-[1]">
                     <button type="submit"
                         class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        <i class="fa-regular fa-magnifying-glass mr-1"></i> Filter
+                        <i class="fa-regular fa-magnifying-glass mr-1"></i> Simpan
                     </button>
                 </div>
 
             </div>
         </form>
     </div>
-
     <form action="{{ route('admin.transaction.withdrawal.store') }}" method="POST">
         @csrf
 
@@ -176,8 +170,7 @@
                                         </span>
                                         <input type="text" id="website-admin"
                                             class="total_unpaid_collector rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
-                                            placeholder="0"
-                                            value="{{ formatMoney($data[$i]['total_unpaid_collector']) }}">
+                                            placeholder="0" value="{{ formatMoney($data[$i]['total_unpaid_collector']) }}">
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
@@ -312,8 +305,9 @@
                                                 No
                                             </th>
                                             <th scope="col" class="text-start px-6 py-3 min-w-[250px] ">
-                                                Nama Kolektor
+                                                Nama Petani
                                             </th>
+
                                             <th scope="col" class="text-start px-6 py-3 min-w-[200px] ">
                                                 Desa
                                             </th>
@@ -395,7 +389,18 @@
                                                         <td class="w-4 p-4"> - </td>
                                                     @endif
                                                     <td class="px-6 py-4">{{ $j + 1 }}</td>
-                                                    <td class="px-6 py-4">{{ $data[$i]['farmer'][$j]['name'] }}</td>
+                                                    <td class="px-6 py-4">{{ $data[$i]['farmer'][$j]['name'] }}
+
+                                                        <br>
+                                                        <input
+                                                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                                            id="file_input" type="file">
+                                                    </td>
+                                                    <td class="px-6 py-4">
+
+
+
+                                                    </td>
                                                     <td class="px-6 py-4">{{ $data[$i]['farmer'][$j]['village'] }}</td>
                                                     <td class="px-6 py-4">
 
@@ -550,10 +555,10 @@
         @endfor
 
         <div class="text-end">
-
+            {{-- 
             <button type="submit"
                 class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Simpan
-                Data</button>
+                Data</button> --}}
         </div>
 
     </form>

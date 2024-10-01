@@ -21,6 +21,8 @@ return new class extends Migration
             $table->double('factory_scales');
             $table->double('can_tolerate');
             $table->double('honorarium_scales');
+            $table->double('used_scales');
+            $table->double('honorarium_farmer');
             $table->string('status');
             $table->timestamps();
         });

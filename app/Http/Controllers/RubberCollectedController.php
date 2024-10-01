@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Collector;
 use App\Models\RubberCollected;
 use Illuminate\Http\Request;
 
@@ -12,14 +13,13 @@ class RubberCollectedController extends Controller
      */
     public function index()
     {
-    
-            return view(
-                'transaction.rubber-collected.index',
-                [
-                    'title' => 'Input Nota Timbangan',
-                ]
-            );
-        
+
+        return view(
+            'transaction.rubber-collected.index',
+            [
+                'title' => 'Input Nota Timbangan',
+            ]
+        );
     }
 
     /**

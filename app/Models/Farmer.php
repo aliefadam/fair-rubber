@@ -15,4 +15,7 @@ class Farmer extends Model
     {
         return $this->belongsTo(Collector::class);
     }
+    function rubberCollectedDetail() {
+        return $this->hasMany(RubberCollectedDetail::class);
+    }
 }

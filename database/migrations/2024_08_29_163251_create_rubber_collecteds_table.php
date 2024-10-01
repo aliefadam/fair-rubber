@@ -19,6 +19,8 @@ return new class extends Migration
             $table->double('total_factory_scales');
             $table->double('total_can_tolerate');
             $table->double('total_honorarium_scales');
+            $table->double('total_used_scales');
+            
             $table->double('max_tolerance_percentage');
             $table->double('tolerance_percentage_scales');
 

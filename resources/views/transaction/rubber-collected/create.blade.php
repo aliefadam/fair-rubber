@@ -170,8 +170,8 @@
                             <p class="text-[15px] font-semibold" id="total-timbangan-collector">0</p>
                         </th>
                         <th class="px-6 py-4 text-center flex justify-center">
-                            <input type="number" id="kode" name="kode"
-                                class="input-timbangan-pabrik text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                            <input type="number" id="total-timbangan-pabrik" name="kode"
+                                class="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                         </th>
                         <th class="px-6 py-4 text-center">
                             <p class="text-[15px] font-semibold" id="total-dapat-toleransi">0</p>
@@ -195,7 +195,7 @@
                             <p class="text-[15px] font-semibold"> Toleransi Timbangan </p>
                         </th>
                         <th class="px-6 py-4 text-end">
-                            <p class="text-[15px] font-semibold" id="tolerance-current"></p>
+                            <p class="text-[15px] font-semibold" id="toleransi-timbangan"></p>
                         </th>
                     </tr>
                     <tr
@@ -229,13 +229,113 @@
 
 @section('more-script')
     <script>
-        $(".input-timbangan-collector").on("input", totalTimbanganCollector);
+        $(".input-timbangan-collector").on("input", hitungTotalTimbanganCollector);
+        $("#total-timbangan-pabrik").on("input", hitungTotalTimbanganCollector);
+        const toleransiKolektor = 10;
+        let toleransiTimbangan = 0;
 
-        function totalTimbanganCollector() {
-            const total = $(".input-timbangan-collector").get().map((input) => {
+        function hitungTotalTimbanganCollector() {
+            const totalTimbanganCollector = $(".input-timbangan-collector").get().map((input) => {
                 return +input.value;
             }).reduce((acc, curr) => acc + curr);
-            $("#total-timbangan-collector").html(total);
+            $("#total-timbangan-collector").html(totalTimbanganCollector);
+            hitungToleransiTimbangan();
+        }
+
+        function hitungToleransiTimbangan() {
+            const totalTimbanganCollector = +$("#total-timbangan-collector").html();
+            const totalTimbanganPabrik = +$("#total-timbangan-pabrik").val();
+            /*
+             * Rumus Toleransi Timbangan adalah
+             * ((totalTimbanganCollector - totalTimbanganPabrik) / totalTimbanganCollector) * 100
+             * Dibulatkan Keatas
+             */
+            toleransiTimbangan = Math.ceil(parseFloat(((totalTimbanganCollector - totalTimbanganPabrik) /
+                    totalTimbanganCollector) *
+                100).toFixed(2));
+            $("#toleransi-timbangan").html(toleransiTimbangan + "%");
+            generateAll();
+        }
+
+        function generateAll() {
+            isiTimbanganPabrik();
+            hitungTotalDapatToleransi();
+            hitungTotalTimbanganPremi();
+            hitungPremiPetani();
+            hitungPremiCollector();
+        }
+
+        /*
+         * Rumus Mengisi Timbangan Pabrik
+         * timbangan pabrik = setiap input timbangan collector - (setiap input timbangan collector * toleransiTimbangan / 100)
+         * Dibulatkan Keatas
+         */
+        function isiTimbanganPabrik() {
+            $(".input-timbangan-collector").each((i, timbanganCollector) => {
+                const timbanganPabrik = Math.ceil(timbanganCollector.value - ((timbanganCollector.value *
+                    toleransiTimbangan) / 100));
+                $(".timbangan-pabrik").eq(i).html(timbanganPabrik);
+            });
+        }
+
+        function hitungTotalDapatToleransi() {
+            const totalDapatToleransi = [];
+            if (dibawahSusut()) {
+                // Posisi Dibawah
+                $(".input-timbangan-collector").each((i, timbanganCollector) => {
+                    const dapatToleransi = Math.floor((timbanganCollector.value *
+                        toleransiTimbangan) / 100);
+                    totalDapatToleransi.push(dapatToleransi);
+                    $(".dapat-toleransi").eq(i).html(dapatToleransi);
+                });
+            } else {
+                // Posisi Diatas
+                $(".input-timbangan-collector").each((i, timbanganCollector) => {
+                    const dapatToleransi = Math.floor((timbanganCollector.value *
+                        toleransiKolektor) / 100);
+                    totalDapatToleransi.push(dapatToleransi);
+                    $(".dapat-toleransi").eq(i).html(dapatToleransi);
+                });
+            }
+
+            const total = totalDapatToleransi.reduce((acc, curr) => acc + curr);
+            $("#total-dapat-toleransi").html(total);
+        }
+
+        function hitungTotalTimbanganPremi() {
+            $(".timbangan-pabrik").each((i, timbanganPabrik) => {
+                const timbanganPremi = +timbanganPabrik.innerHTML + +$(".dapat-toleransi").eq(i).html();
+                $(".timbangan-premi").eq(i).html(timbanganPremi)
+            });
+
+            const totalTimbanganPremi = $(".timbangan-premi").get().map((timbanganPremi) => {
+                return +timbanganPremi.innerHTML;
+            }).reduce((acc, curr) => acc + curr);
+            $("#total-timbangan-premi").html(totalTimbanganPremi);
+        }
+
+        function hitungPremiPetani() {
+            const premiPetani = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(+$("#total-timbangan-premi").html() * 2000);
+            $("#premi-petani").html(premiPetani);
+        }
+
+        function hitungPremiCollector() {
+            const premiCollector = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(+$("#total-timbangan-premi").html() * 500);
+            $("#premi-collector").html(premiCollector);
+        }
+
+        function dibawahSusut() {
+            return toleransiTimbangan <= toleransiKolektor;
         }
     </script>
 @endsection

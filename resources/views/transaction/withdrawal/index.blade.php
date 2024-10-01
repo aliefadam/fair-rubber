@@ -94,9 +94,11 @@
                                     <tr>
                                         <td class="table-td">1</td>
                                         <td class="table-td">
+                                            <a href="{{ route('admin.transaction.withdrawal.detail-withdrawal',1) }}">
                                             <span
                                                 class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Selesai
                                             </span>
+                                        </a>
                                         </td>
                                         <td class="table-td">2024-08-01</td>
                                         <td class="table-td">2024-08-05</td>

@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class RubberCollected extends Model
 {
     use HasFactory;
+
+    function rubberCollectedDetail() {
+        return $this->hasMany(RubberCollectedDetail::class);
+    }
 }

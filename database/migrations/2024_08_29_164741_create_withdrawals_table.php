@@ -13,6 +13,19 @@ return new class extends Migration
     {
         Schema::create('withdrawals', function (Blueprint $table) {
             $table->id();
+            $table->date('date_start');
+            $table->date('date_end');
+
+            $table->double('total_collector_scales');
+            $table->double('total_factory_scales');
+
+            $table->double('total_honorarium_farmer');
+            $table->double('total_honorarium_collector');
+
+            $table->text('description')->nullable();
+
+            $table->string('status');
+            
             $table->timestamps();
         });
     }

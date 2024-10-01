@@ -15,4 +15,9 @@ class Collector extends Model
     {
         return $this->hasMany(Farmer::class);
     }
+
+    public function rubberCollected()
+    {
+    return $this->hasMany(RubberCollected::class);
+    }
 }
