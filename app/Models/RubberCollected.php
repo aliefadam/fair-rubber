@@ -9,7 +9,15 @@ class RubberCollected extends Model
 {
     use HasFactory;
 
-    function rubberCollectedDetail() {
+    protected $guarded = ["id"];
+
+    function rubberCollectedDetail()
+    {
         return $this->hasMany(RubberCollectedDetail::class);
+    }
+
+    function collector()
+    {
+        return $this->belongsTo(Collector::class);
     }
 }

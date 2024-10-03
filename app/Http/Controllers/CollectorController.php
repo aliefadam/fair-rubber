@@ -114,6 +114,18 @@ class CollectorController extends Controller
         //
     }
 
+    public function getCollectorByID($id)
+    {
+        $collector = Collector::find($id);
+        $farmers = $collector->farmers;
+        return response()->json([
+            "view" => view("components/rubberCollectedTable", [
+                "collector" => $collector,
+                "farmers" => $farmers,
+            ])->render(),
+        ]);
+    }
+
     public function addFarmer($id)
     {
         return view("master.collector.add-farmer", [

@@ -145,7 +145,7 @@ Route::prefix("/admin")->group(function () {
             }
 
             // membuat array untuk petani yang belum memiliki data pada database
-            // men-loop data rubber collected 
+            // men-loop data rubber collected
             for ($j = 0; $j < count($rubberCollectedData); $j++) {
                 $totalPaidFarmer = 0;  // Variabel untuk menyimpan total paid
                 $totalPaidFarmerKg = 0;  // Variabel untuk menyimpan total paid
@@ -166,7 +166,7 @@ Route::prefix("/admin")->group(function () {
                             ];
 
 
-                            // Periksa status, jika status "1", tambahkan ke total unpaid 
+                            // Periksa status, jika status "1", tambahkan ke total unpaid
                             for ($l = 0; $l < count($data[$i]['farmer'][$lastIndex]['rubber']); $l++) {
                                 $totalPaidFarmer += $data[$i]['farmer'][$lastIndex]['rubber'][$l]['honorarium_farmer'];
                                 $totalPaidFarmerKg += $data[$i]['farmer'][$lastIndex]['rubber'][$l]['used_scales'];
@@ -195,6 +195,6 @@ Route::prefix("/admin")->group(function () {
             'collector' => $collector,
         ]);
     })->name("admin.transaction.withdrawal.detail-withdrawal");
-
-    
 });
+
+require_once __DIR__ . '/api.php';
