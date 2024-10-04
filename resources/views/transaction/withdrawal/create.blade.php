@@ -37,6 +37,15 @@
     <form action="{{ route('admin.transaction.withdrawal.store') }}" method="POST">
         @csrf
 
+        <input type="date" name="date_start_store"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        value="{{ request()->date_start }}" required />
+
+        <input type="date" name="date_end_store"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        value="{{ request()->date_end }}" required />
+        
+
         <div class="mt-5">
             <div class="flex justify-between items-center">
                 <h1 class="text-xl font-medium ">Data Kolektor</h1>
@@ -165,10 +174,10 @@
                                         </span>
                                         <input type="text" id="website-admin"
                                             class="total_unpaid_farmer total_unpaid_farmer_{{ $data[$i]['collector_id'] }} rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
-                                            placeholder="0" {{-- value="{{ formatMoney($data[$i]['total_unpaid_farmer']) }} "> --}}>
+                                            placeholder="0" name="total_unpaid_farmer[]" {{-- value="{{ formatMoney($data[$i]['total_unpaid_farmer']) }} "> --}}>
                                         <input type="text" id="website-admin"
                                             class="total_unpaid_farmer_all total_unpaid_farmer_all_{{ $data[$i]['collector_id'] }} rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
-                                            placeholder="0" {{-- value="{{ formatMoney($data[$i]['total_unpaid_farmer']) }} "> --}}>
+                                            placeholder="0" name="total_unpaid_farmer_should[]" {{-- value="{{ formatMoney($data[$i]['total_unpaid_farmer']) }} "> --}}>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
@@ -179,7 +188,12 @@
                                         </span>
                                         <input type="text" id="website-admin"
                                             class="total_unpaid_collector total_unpaid_collector_{{ $data[$i]['collector_id'] }} rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
-                                            placeholder="0"
+                                            placeholder="0" name="total_unpaid_collector[]"
+                                            value="{{ formatMoney($data[$i]['total_unpaid_collector']) }}">
+
+                                        <input type="text" id="website-admin"
+                                            class="total_unpaid_collector_hidden total_unpaid_collector_hidden_{{ $data[$i]['collector_id'] }} rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
+                                            placeholder="0" name="total_unpaid_collector_should[]"
                                             value="{{ formatMoney($data[$i]['total_unpaid_collector']) }}">
                                     </div>
                                 </td>
@@ -231,19 +245,24 @@
                             <th class="px-6 py-4 text-end">
                                 <p class="text-[15px] font-semibold totalFarmerScalesKgUnpaid">
                                     {{ $totalFarmerScalesKgUnpaid }} Kg </p>
-                                <input type="hidden" class="totalFarmerScalesKgUnpaidValue" name="">
+                                <input type="hidden" class="totalFarmerScalesKgUnpaidValue"
+                                    name="total_farmer_scales_kg_unpaid_value">
                             </th>
                             <th class="px-6 py-4 text-end">
                                 <p class="text-[15px] font-semibold totalFarmerScalesUnpaid">
                                     {{ formatMoney($totalFarmerScalesUnpaid, true) }}
                                 </p>
-                                <input type="hidden" class="totalFarmerScalesUnpaidValue" name="">
+                                <input type="hidden" class="totalFarmerScalesUnpaidValue"
+                                    name="total_farmer_scales_unpaid_value">
                             </th>
                             <th class="px-6 py-4 text-end">
                                 <p class="text-[15px] font-semibold totalCollectorScalesUnpaid">
                                     {{ formatMoney($totalCollectorScalesUnpaid, true) }}
                                 </p>
-                                <input type="hidden" class="totalCollectorScalesUnpaidValue" name="">
+                                <input type="hidden" name="total_collector_scales_unpaid_should_value"
+                                    value="{{ formatMoney($totalCollectorScalesUnpaid) }}">
+                                <input type="hidden" class="totalCollectorScalesUnpaidValue"
+                                    name="total_collector_scales_unpaid_value">
                             </th>
                             <th class="px-6 py-4 text-end">
                                 <p class="text-[15px] font-semibold"> {{ $totalFarmerScalesKgPaid }} Kg </p>
@@ -261,6 +280,14 @@
             </div>
         </div>
 
+
+
+
+
+        
+
+
+        {{-- DATA PETANI --}}
         @for ($i = 0; $i < count($data); $i++)
             <!-- Main modal -->
             <div id="modal-collector-{{ $data[$i]['collector_id'] }}" tabindex="-1"
@@ -353,10 +380,14 @@
                                             $subTotalFarmerScalesKgPaid = 0;
 
                                         @endphp
-                                        @isset($data[$i]['farmer'])
+                                        @if(isset($data[$i]['farmer']))
                                             @for ($j = 0; $j < count($data[$i]['farmer']); $j++)
                                                 <input type="hidden" name="farmer_id_{{ $data[$i]['collector_id'] }}[]"
                                                     value="{{ $data[$i]['farmer'][$j]['id'] }}">
+
+                                                    
+                                                    
+                                                
 
                                                 @php
 
@@ -383,6 +414,19 @@
                                                             <input type="hidden" value="{{ $data[$i]['collector_id'] }}"
                                                                 class="collector_id_per_farmer">
 
+
+                                                            {{-- mengecek id rubbercollected yang terkait /  --}}
+                                                            @if (isset($data[$i]['farmer'][$j]['rubber']))
+                                                                @for ($k = 0; $k < count($data[$i]['farmer'][$j]['rubber']); $k++)
+                                                                    @if (isset($data[$i]['farmer'][$j]['rubber'][$k]['id']))
+                                                                        <input type="text" 
+                                                                            name="farmer_id_rubber_collected_{{$data[$i]['farmer'][$j]['id']}}_{{ $data[$i]['collector_id'] }}[]" 
+                                                                            value="{{ $data[$i]['farmer'][$j]['rubber'][$k]['id'] }}">
+                                                                    @endif
+                                                                @endfor
+                                                            @endif
+
+
                                                             <div class="flex items-center">
                                                                 <input id="checkbox-table-search-1" type="checkbox"
                                                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600
@@ -406,9 +450,10 @@
                                                             <input type="text" id="email-address-icon"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pe-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end 
                                                                 unpaid_kg_farmer_id_{{ $data[$i]['farmer'][$j]['id'] }}_{{ $data[$i]['collector_id'] }}
-                                                                unpaid_kg_farmer_id_{{ $data[$i]['collector_id'] }}
-                                                                "
+                                                                unpaid_kg_farmer_id_{{ $data[$i]['collector_id'] }}"
+                                                                
                                                                 placeholder="0"
+                                                                name="unpaid_kg_farmer_id_{{ $data[$i]['farmer'][$j]['id'] }}_{{ $data[$i]['collector_id'] }}"
                                                                 value="{{ formatMoney($data[$i]['farmer'][$j]['unpaid_kg_farmer']) }}">
                                                             <div
                                                                 class="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none">
@@ -426,8 +471,8 @@
                                                             <input type="text" id="website-admin"
                                                                 class="rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end  
                                                                 unpaid_farmer_id_{{ $data[$i]['farmer'][$j]['id'] }}_{{ $data[$i]['collector_id'] }}
-                                                                unpaid_farmer_id_{{ $data[$i]['collector_id'] }}
-                                                                "
+                                                                unpaid_farmer_id_{{ $data[$i]['collector_id'] }}"
+                                                                
                                                                 placeholder="0"
                                                                 name="unpaid_farmer_id_{{ $data[$i]['farmer'][$j]['id'] }}_{{ $data[$i]['collector_id'] }}"
                                                                 value="{{ formatMoney($data[$i]['farmer'][$j]['total_unpaid']) }}">
@@ -595,7 +640,8 @@
             // Fungsi untuk menghitung unpaid farmer
             function calculateFarmerUnpaid() {
                 $('.checked_farmer').each(function() {
-                    var checkCollector = $(this).closest('.data-detail-farmer').find('.collector_id_per_farmer').val();
+                    var checkCollector = $(this).closest('.data-detail-farmer').find(
+                        '.collector_id_per_farmer').val();
 
                     var totalFarmerUnpaidKg = 0;
                     var totalFarmerUnpaidTotal = 0;
@@ -603,39 +649,51 @@
                     // Melakukan loop pada class checkbox pada farmer
                     $('.checked_farmer_' + checkCollector).each(function(i, obj) {
                         if ($(this).prop('checked') == true) {
-                            var unpaidKgRaw = parseFloat($(this).closest('.data-detail-farmer').find('.unpaid_kg_farmer_id_' + checkCollector).val().replace(/\./g, '')) || 0;
+                            var unpaidKgRaw = parseFloat($(this).closest('.data-detail-farmer')
+                                .find('.unpaid_kg_farmer_id_' + checkCollector).val().replace(
+                                    /\./g, '')) || 0;
                             totalFarmerUnpaidKg += unpaidKgRaw;
 
-                            var unpaidTotalRaw = parseFloat($(this).closest('.data-detail-farmer').find('.unpaid_farmer_id_' + checkCollector).val().replace(/\./g,'')) || 0;
+                            var unpaidTotalRaw = parseFloat($(this).closest('.data-detail-farmer')
+                                .find('.unpaid_farmer_id_' + checkCollector).val().replace(
+                                    /\./g, '')) || 0;
                             totalFarmerUnpaidTotal += unpaidTotalRaw;
                         }
                     });
 
                     // Drop data hasil perhitungan ke dalam class yang ditentukan
-                    $('.dropHereFarmerTotalUnpaidKg_' + checkCollector).val(formatNumber(totalFarmerUnpaidKg));
-                    $('.dropHereFarmerTotalUnpaidKg_' + checkCollector).html(formatNumber(totalFarmerUnpaidKg) + ' KG');
-                    $('.dropHereFarmerTotalUnpaid_' + checkCollector).val(formatNumber(totalFarmerUnpaidTotal));
-                    $('.dropHereFarmerTotalUnpaid_' + checkCollector).html(formatMoney(totalFarmerUnpaidTotal));
+                    $('.dropHereFarmerTotalUnpaidKg_' + checkCollector).val(formatNumber(
+                        totalFarmerUnpaidKg));
+                    $('.dropHereFarmerTotalUnpaidKg_' + checkCollector).html(formatNumber(
+                        totalFarmerUnpaidKg) + ' KG');
+                    $('.dropHereFarmerTotalUnpaid_' + checkCollector).val(formatNumber(
+                        totalFarmerUnpaidTotal));
+                    $('.dropHereFarmerTotalUnpaid_' + checkCollector).html(formatMoney(
+                        totalFarmerUnpaidTotal));
 
                     $('.total_unpaid_kg_farmer_' + checkCollector).val(formatNumber(totalFarmerUnpaidKg));
                     $('.total_unpaid_farmer_' + checkCollector).val(formatNumber(totalFarmerUnpaidTotal));
 
-                    $('.total_unpaid_farmer_all_' + checkCollector).val($('.dropHereFarmerTotalUnpaidAll_' +checkCollector).val());
+                    $('.total_unpaid_farmer_all_' + checkCollector).val($('.dropHereFarmerTotalUnpaidAll_' +
+                        checkCollector).val());
 
-                    // alert($('.dropHereFarmerTotalUnpaidAll_' +checkCollector).val());
+                    // menghitung persentase dari nilai keseluruhan petani yang belum dibayarkan dan dibandingkan dengan yang dipilih saja.
+                    var percentageFarmerWithdrawn = (totalFarmerUnpaidTotal / $(
+                        '.dropHereFarmerTotalUnpaidAll_' + checkCollector).val().replace(/\./g,
+                        '') || 0) * 100;
 
-                    // percentage = (partial_value / total_value) * 100
-                    var percentageFarmerWithdrawn = (totalFarmerUnpaidTotal/$('.dropHereFarmerTotalUnpaidAll_' +checkCollector).val().replace(/\./g, '') || 0)*100;
-                    console.log(percentageFarmerWithdrawn);
+                    // hasil dari persentase petani , dijadikan acuan untuk menghitung total persentase / uang yang akan dicairkan oleh koletor tersebut
+                    var percentageCollectorToWithdrawn = (percentageFarmerWithdrawn / 100) * $(
+                            '.total_unpaid_collector_hidden_' + checkCollector).val().replace(/\./g, '') ||
+                        0;
+                    // console.log(percentageCollectorToWithdrawn);
 
-                    console.log($('.total_unpaid_collector_' +checkCollector).val().replace(/\./g, '') || 0);
-                    var percentageCollectorToWithdrawn = (totalFarmerUnpaidTotal/$('.dropHereFarmerTotalUnpaidAll_' +checkCollector).val().replace(/\./g, '') || 0)*100;
-                    console.log(percentageCollectorToWithdrawn);
-                    
-                    
-                    
+                    $('.total_unpaid_collector_' + checkCollector).val(formatNumber(
+                        percentageCollectorToWithdrawn));
 
                 });
+                calc();
+
             }
 
             // Fungsi kalkulasi untuk collector
@@ -646,13 +704,16 @@
 
                 $('.checked_collector').each(function(i, obj) {
                     if ($(this).prop('checked') == true) {
-                        var unpaidKgRaw = parseFloat($(this).closest('.data-detail-collector').find('.total_unpaid_kg_farmer').val().replace(/\./g, '')) || 0;
+                        var unpaidKgRaw = parseFloat($(this).closest('.data-detail-collector').find(
+                            '.total_unpaid_kg_farmer').val().replace(/\./g, '')) || 0;
                         totalFarmerUnpaidKg += unpaidKgRaw;
 
-                        var unpaidTotalRaw = parseFloat($(this).closest('.data-detail-collector').find('.total_unpaid_farmer').val().replace(/\./g, '')) || 0;
+                        var unpaidTotalRaw = parseFloat($(this).closest('.data-detail-collector').find(
+                            '.total_unpaid_farmer').val().replace(/\./g, '')) || 0;
                         totalFarmerUnpaidTotal += unpaidTotalRaw;
 
-                        var unpaidTotalCollectorRaw = parseFloat($(this).closest('.data-detail-collector').find('.total_unpaid_collector').val().replace(/\./g, '')) || 0;
+                        var unpaidTotalCollectorRaw = parseFloat($(this).closest('.data-detail-collector')
+                            .find('.total_unpaid_collector').val().replace(/\./g, '')) || 0;
                         totalCollectorUnpaidTotal += unpaidTotalCollectorRaw;
                     }
                 });

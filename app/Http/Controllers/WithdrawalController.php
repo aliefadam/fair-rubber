@@ -6,6 +6,7 @@ use App\Models\Collector;
 use App\Models\RubberCollected;
 use App\Models\Withdrawal;
 use Illuminate\Http\Request;
+use DB;
 
 class WithdrawalController extends Controller
 {
@@ -46,6 +47,7 @@ class WithdrawalController extends Controller
             $data[$i]['collector_name'] = $collector[$i]->name;
             $data[$i]['collector_village'] = $collector[$i]->village;
 
+            // mencari data total yang ingin dicarikan collector
             for ($j = 0; $j < count($collector[$i]->rubberCollected); $j++) {
                 // belum cair
                 if ($collector[$i]->rubberCollected[$j]->status == 1) {
@@ -78,8 +80,10 @@ class WithdrawalController extends Controller
                 $paid_farmer = 0;
                 $unpaid_kg_farmer = 0;
                 $unpaid_farmer = 0;
+                // $data[$i]['farmer'][$j]['rubber'] = [];
                 // loop data rubbercollecteddetail yang ter-relasi dengan petani
                 for ($k = 0; $k < count($collector[$i]->farmers[$j]->rubberCollectedDetail); $k++) {
+                    $data[$i]['farmer'][$j]['rubber'][$k]['id'] = $collector[$i]->farmers[$j]->rubberCollectedDetail[$k]->rubberCollected->id;
                     $data[$i]['farmer'][$j]['rubber'][$k]['used_scales'] = $collector[$i]->farmers[$j]->rubberCollectedDetail[$k]->used_scales;
                     $data[$i]['farmer'][$j]['rubber'][$k]['honorarium_farmer'] = $collector[$i]->farmers[$j]->rubberCollectedDetail[$k]->honorarium_farmer;
                     $data[$i]['farmer'][$j]['rubber'][$k]['status'] = $collector[$i]->farmers[$j]->rubberCollectedDetail[$k]->status;
@@ -117,6 +121,9 @@ class WithdrawalController extends Controller
             for ($j = 0; $j < count($rubberCollectedData); $j++) {
                 $totalPaidFarmer = 0;  // Variabel untuk menyimpan total paid
                 $totalPaidFarmerKg = 0;  // Variabel untuk menyimpan total paid
+
+                // $data[$i]['farmer'][$j]['rubber'] = [];
+
                 for ($k = 0; $k < count($rubberCollectedData[$j]->rubberCollectedDetail); $k++) {
                     if ($rubberCollectedData[$j]->rubberCollectedDetail[$k]->farmer_id == null) {
                         if ($rubberCollectedData[$j]->collector_id == $collector[$i]->id) {
@@ -128,6 +135,7 @@ class WithdrawalController extends Controller
 
                             // membuat array untuk men-list data kolektor
                             $data[$i]['farmer'][$lastIndex]['rubber'][] = [
+                                'id' => $rubberCollectedData[$j]->id,
                                 'used_scales' => $rubberCollectedData[$j]->rubberCollectedDetail[$k]->used_scales,
                                 'honorarium_farmer' => $rubberCollectedData[$j]->rubberCollectedDetail[$k]->honorarium_farmer,
                                 'status' => $rubberCollectedData[$j]->rubberCollectedDetail[$k]->status
@@ -160,7 +168,7 @@ class WithdrawalController extends Controller
             $data[$i]['total_unpaid_kg_farmer'] = $total_unpaid_kg_farmer;
         }
 
-        // return $data[0]['farmer'][0]['name'];
+        // return $data[0]['farmer'][0]['rubber'][0]->id;
 
         // return $data;
         return view("transaction.withdrawal.create", [
@@ -175,13 +183,58 @@ class WithdrawalController extends Controller
      */
     public function store(Request $req)
     {
-        return $req->all();
+        // return $req->all();
 
         // Ambil semua input dari request
+        // $input = $req->all();
+
+        // $unpaidFarmer= [];
+
+        // // Loop melalui collector_id
+        // for ($i = 0; $i < count($input['collector_id']); $i++) {
+        //     $collectorId = $input['collector_id'][$i];  // ID Collector saat ini
+
+        //     // Periksa apakah checkbox collector diaktifkan
+        //     if ($req->has('checkbox_collector_' . $collectorId)) {
+
+        //         // Loop melalui farmer_id untuk setiap collector
+        //         foreach ($input['farmer_id_' . $collectorId] as $farmerIndex => $farmerId) {
+        //             // Cek apakah farmer_id ada dan checkbox farmer diaktifkan
+        //             if ($farmerId !== null && $req->has('checked_farmer_' . $farmerId . '_' . $collectorId)) {
+
+        //                 // Ambil nilai unpaid_farmer_id
+        //                 $unpaidFarmer[] = isset($input['unpaid_farmer_id_' . $farmerId . '_' . $collectorId]) ? $input['unpaid_farmer_id_' . $farmerId . '_' . $collectorId] : 0;
+
+        //             }
+        //         }
+        //     }
+        // }
+
+
+
+        // return $unpaidFarmer;
+
+
+        // mengolah data withdrawal parent
+        
+
+
         $input = $req->all();
 
+        $datawithdrawal = [
+            'id'=>DB::table('withdrawals')->max('id')+1,
+            'data_start'=>$req->date_start_store,
+            'date_end'=>$req->date_end_store,
+            'total_scales_withdrawn'=>str_replace(".","","$req->total_farmer_scales_kg_unpaid_value"),
+            'total_honorarium_farmer'=>str_replace(".","","$req->total_farmer_scales_unpaid_value"),
+            'total_honorarium_collector'=>str_replace(".","","$req->total_collector_scales_unpaid_value"),
+            'description'=>'-',
+            'status'=>1,
+        ];
 
-        $unpaidFarmer= [];
+
+
+        $datawithdrawalFarmer= [];
 
         // Loop melalui collector_id
         for ($i = 0; $i < count($input['collector_id']); $i++) {
@@ -196,22 +249,19 @@ class WithdrawalController extends Controller
                     if ($farmerId !== null && $req->has('checked_farmer_' . $farmerId . '_' . $collectorId)) {
 
                         // Ambil nilai unpaid_farmer_id
-                        $unpaidFarmer[] = isset($input['unpaid_farmer_id_' . $farmerId . '_' . $collectorId]) ? $input['unpaid_farmer_id_' . $farmerId . '_' . $collectorId] : 0;
+                        $datawithdrawalFarmer[$collectorId][$farmerId]['total'] = isset($input['unpaid_farmer_id_' . $farmerId . '_' . $collectorId]) ? $input['unpaid_farmer_id_' . $farmerId . '_' . $collectorId] : 0;
+                        $datawithdrawalFarmer[$collectorId][$farmerId]['kg'] = isset($input['unpaid_kg_farmer_id_' . $farmerId . '_' . $collectorId]) ? $input['unpaid_kg_farmer_id_' . $farmerId . '_' . $collectorId] : 0;
+                        $datawithdrawalFarmer[$collectorId][$farmerId]['id'] = $farmerId;
+                        $datawithdrawalFarmer[$collectorId][$farmerId]['rubber_collected_id'] = isset($input['farmer_id_rubber_collected_' . $farmerId . '_' . $collectorId]) ? $input['farmer_id_rubber_collected_' . $farmerId . '_' . $collectorId] : [];
 
-                        // Simpan data ke database
-                        // DB::table('rubber_transactions')->insert([
-                        //     'collector_id' => $collectorId,
-                        //     'farmer_id' => $farmerId,
-                        //     'unpaid_amount' => $unpaidFarmer,
-                        //     'created_at' => now(),
-                        //     'updated_at' => now(),
-                        // ]);
                     }
                 }
             }
         }
 
-        return $unpaidFarmer;
+        return $datawithdrawalFarmer;
+
+
 
         // Redirect atau response setelah data tersimpan
         // return

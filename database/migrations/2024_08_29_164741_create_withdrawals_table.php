@@ -16,8 +16,8 @@ return new class extends Migration
             $table->date('date_start');
             $table->date('date_end');
 
-            $table->double('total_collector_scales');
-            $table->double('total_factory_scales');
+            // $table->double('total_collector_scales');
+            $table->double('total_scales_withdrawn');
 
             $table->double('total_honorarium_farmer');
             $table->double('total_honorarium_collector');
@@ -25,6 +25,8 @@ return new class extends Migration
             $table->text('description')->nullable();
 
             $table->string('status');
+
+            //1 = diproses 2 = selesai
             
             $table->timestamps();
         });

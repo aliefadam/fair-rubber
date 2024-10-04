@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('withdrawal_details', function (Blueprint $table) {
+        Schema::create('withdrawal_farmer_rubber_collected_details', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('withdrawal_farmer_rubber_collected_id');
+            $table->foreignId('rubber_collected_id');
             $table->timestamps();
         });
     }
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('withdrawal_details');
+        Schema::dropIfExists('withdrawal_farmer_rubber_collected_details');
     }
 };
