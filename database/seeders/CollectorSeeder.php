@@ -14,7 +14,7 @@ class CollectorSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+
         Collector::create(
             [
                 "code" => "123",
@@ -67,5 +67,6 @@ class CollectorSeeder extends Seeder
                 "account_name" => "Acip",
             ]
         );
+
     }
 }

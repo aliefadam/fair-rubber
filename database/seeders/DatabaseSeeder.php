@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CollectorSeeder::class,
             FarmerSeeder::class,
-            RubberCollectedSeeder::class,
-            RubberCollectedDetailSeeder::class,
+            // RubberCollectedSeeder::class,
+            // RubberCollectedDetailSeeder::class,
         ]);
     }
 }
