@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return redirect()->to('/admin');
 });
 
 Route::get("/admin", function () {
@@ -29,9 +30,12 @@ Route::prefix("/admin")->group(function () {
         Route::resource("collector", CollectorController::class, [
             "as" => "admin.master",
         ]);
+
+        Route::get("data/collector/data-detail/{id}", [CollectorController::class, "dataDetail"])->name("admin.master.collector.data-detail");
         Route::get("data/collector/add-farmer/{id}", [CollectorController::class, "addFarmer"])->name("admin.master.collector.addFarmer");
         Route::post("data/collector/store-farmer/{id}", [CollectorController::class, "storeFarmer"])->name("admin.master.collector.storeFarmer");
-        Route::get("data/collector/data-detail/{id}", [CollectorController::class, "dataDetail"])->name("admin.master.collector.data-detail");
+        Route::get("data/collector/edit-farmer/{id}", [CollectorController::class, "editFarmer"])->name("admin.master.collector.editFarmer");
+        Route::put("data/collector/update-farmer/{id}", [CollectorController::class, "updateFarmer"])->name("admin.master.collector.updateFarmer");
     });
 
     Route::prefix("transaction")->group(function () {

@@ -95,7 +95,10 @@ class CollectorController extends Controller
      */
     public function edit(Collector $collector)
     {
-        //
+        return view("master.collector.edit", [
+            "title" => "Edit Kolektor",
+            "collector" => $collector,
+        ]);
     }
 
     /**
@@ -103,7 +106,31 @@ class CollectorController extends Controller
      */
     public function update(Request $request, Collector $collector)
     {
-        //
+        $collector->update([
+            "nik" => $request->nik,
+            "no_kk" => $request->no_kk,
+            "name" => $request->nama,
+            "gender" => $request->gender,
+            "birth_date" => $request->ttl,
+            "village" => $request->desa,
+            "address" => $request->alamat,
+            "sub_district_id" => $request->kelurahan,
+            "district_id" => $request->kecamatan,
+            "city_id" => $request->kabupaten_kota,
+            "province_id" => $request->provinsi,
+            "date_of_join" => $request->anggota_sejak,
+            "number_of_garden" => $request->jumlah_kebun,
+            "size_of_garden" => $request->luas_kebun,
+            "number_of_tree" => $request->jumlah_pohon,
+            "weekly_harvest" => $request->hasil_panen_seminggu,
+            "ownership_garden" => $request->kepemilikan_kebun,
+            "phone" => $request->no_telephone,
+            "bank_name" => $request->bank,
+            "account_number" => $request->no_rekening,
+            "account_name" => $request->nama_rekening,
+        ]);
+
+        return redirect()->route("admin.master.collector.index");
     }
 
     /**
@@ -162,5 +189,41 @@ class CollectorController extends Controller
 
         Farmer::create($newFarmer);
         return back();
+    }
+
+    public function editFarmer($id)
+    {
+        return view("master.collector.edit-farmer", [
+            "title" => "Edit Petani",
+            "farmer" => Farmer::find($id),
+        ]);
+    }
+
+    public function updateFarmer(Request $request, $id)
+    {
+        $farmer = Farmer::find($id);
+        $farmer->update([
+            "name" => $request->nama,
+            "nik" => $request->nik,
+            "no_kk" => $request->no_kk,
+            "gender" => $request->gender,
+            "birth_date" => $request->ttl,
+            "village" => $request->desa,
+            "sub_district_id" => $request->kelurahan,
+            "district_id" => $request->kecamatan,
+            "city_id" => $request->kabupaten_kota,
+            "province_id" => $request->provinsi,
+            "date_of_join" => $request->anggota_sejak,
+            "number_of_garden" => $request->jumlah_kebun,
+            "size_of_garden" => $request->luas_kebun,
+            "number_of_tree" => $request->jumlah_pohon,
+            "weekly_harvest" => $request->hasil_panen_seminggu,
+            "ownership_garden" => $request->kepemilikan_kebun,
+            "phone" => $request->no_telephone,
+            "bank_name" => $request->bank,
+            "account_number" => $request->no_rekening,
+            "account_name" => $request->nama_rekening,
+        ]);
+        return redirect()->route("admin.master.collector.data-detail", $farmer->collector_id);
     }
 }
