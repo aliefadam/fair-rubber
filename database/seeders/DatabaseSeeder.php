@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CollectorSeeder::class,
             FarmerSeeder::class,
+            UserSeeder::class,
             // RubberCollectedSeeder::class,
             // RubberCollectedDetailSeeder::class,
         ]);

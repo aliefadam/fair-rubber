@@ -27,7 +27,7 @@
         </div>
 
         <div class="gap-5">
-            <a class="inline-flex justify-center px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-[25px]"
+            <a class="inline-flex justify-center px-5 py-3 bg-blue-600 text-white text-sm font-medium rounded-[25px]"
                 href="{{ route('admin.transaction.withdrawal.create') }}">
                 <span class="flex items-center">
                     <iconify-icon class="text-xl ltr:mr-2 rtl:ml-2" icon="heroicons-outline:plus"></iconify-icon>
@@ -94,11 +94,11 @@
                                     <tr>
                                         <td class="table-td">1</td>
                                         <td class="table-td">
-                                            <a href="{{ route('admin.transaction.withdrawal.detail-withdrawal',1) }}">
-                                            <span
-                                                class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Selesai
-                                            </span>
-                                        </a>
+                                            <a href="{{ route('admin.transaction.withdrawal.detail-withdrawal', 1) }}">
+                                                <span
+                                                    class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Selesai
+                                                </span>
+                                            </a>
                                         </td>
                                         <td class="table-td">2024-08-01</td>
                                         <td class="table-td">2024-08-05</td>

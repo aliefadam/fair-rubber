@@ -74,11 +74,12 @@
 
 @section('more-script')
     <script>
-        initCollector();
+        changeCollector();
         $(".input-timbangan-collector").on("input", hitungTotalTimbanganCollector);
         $("#total-timbangan-pabrik").on("input", hitungTotalTimbanganCollector);
         $("#tambah-petani").on("click", tambahPetani);
         $("#btn-submit").on("click", submitForm)
+        $("select#collector").on("change", changeCollector);
         const toleransiKolektor = 10;
         let toleransiTimbangan = 0;
 
@@ -136,11 +137,14 @@
 
         }
 
-        function initCollector() {
+        function changeCollector() {
             const collectorID = $("#collector").val();
             $.ajax({
                 type: "GET",
                 url: `/getCollectorByID/${collectorID}`,
+                beforeSend: function() {
+                    $("#table").html(loadingChangeCollector());
+                },
                 success: function(response) {
                     const view = response.view;
                     $("#table").html(view);
@@ -148,6 +152,14 @@
                     $("#total-timbangan-pabrik").on("input", hitungTotalTimbanganCollector);
                 }
             });
+        }
+
+        function loadingChangeCollector() {
+            return `
+            <div class="flex justify-center items-center p-5 bg-white">
+                <span class="poppins-medium">LOADING...</span>
+            </div>
+            `;
         }
 
         function hitungTotalTimbanganCollector() {
