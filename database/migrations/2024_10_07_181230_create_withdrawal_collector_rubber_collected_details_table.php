@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('withdrawal_farmer_details', function (Blueprint $table) {
+        Schema::create('withdrawal_collector_rubber_collected_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('farmer_id');
-            $table->foreignId('withdawal_id');
-            $table->double('total_scales_withdrawn');
-            $table->double('total_honorarium_withdrawn');
-            $table->string('proofment')->nullable();
+            $table->foreignId('withdrawal_collector_rubber_collected_id');
+            $table->foreignId('rubber_collected_id');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('withdrawal_farmer_details');
+        Schema::dropIfExists('withdrawal_collector_rubber_collected_details');
     }
 };

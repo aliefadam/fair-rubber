@@ -33,7 +33,6 @@ class RubberCollectedSeeder extends Seeder
                 'total_honorarium_collector_withdrawn' => 0,
 
                 'description' => 1,
-                // 'status'=>1, //1=belum dicarikan,2=sudah dicairkan
                 'status' => 1, //1=belum dicarikan,2=sudah dicairkan,3=diproses,4=belum diambil,5=tidak dicarikan
 
             ]
@@ -59,7 +58,6 @@ class RubberCollectedSeeder extends Seeder
                 'total_honorarium_collector_withdrawn' => 0,
 
                 'description' => 1,
-                // 'status'=>1, //1=belum dicarikan,2=sudah dicairkan
                 'status' => 1, //1=belum dicarikan,2=sudah dicairkan,3=diproses,4=belum diambil,5=tidak dicarikan
 
             ]
@@ -85,7 +83,6 @@ class RubberCollectedSeeder extends Seeder
                 'total_honorarium_collector_withdrawn' => 0,
 
                 'description' => 1,
-                // 'status'=>1, //1=belum dicarikan,2=sudah dicairkan
                 'status' => 1, //1=belum dicarikan,2=sudah dicairkan,3=diproses,4=belum diambil,5=tidak dicarikan
 
             ],

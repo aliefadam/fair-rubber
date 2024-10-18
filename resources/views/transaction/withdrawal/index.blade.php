@@ -62,9 +62,6 @@
                                             Status
                                         </th>
                                         <th scope="col" class=" table-th ">
-                                            Tgl Upload Bukti
-                                        </th>
-                                        <th scope="col" class=" table-th ">
                                             Tgl Permi Dibagikan
                                         </th>
                                         <th scope="col" class=" table-th ">
@@ -91,60 +88,38 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
-                                    <tr>
-                                        <td class="table-td">1</td>
-                                        <td class="table-td">
-                                            <a href="{{ route('admin.transaction.withdrawal.detail-withdrawal',1) }}">
-                                            <span
-                                                class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Selesai
-                                            </span>
-                                        </a>
-                                        </td>
-                                        <td class="table-td">2024-08-01</td>
-                                        <td class="table-td">2024-08-05</td>
-                                        <td class="table-td">Agustus 2024</td>
-                                        <td class="table-td">1500 kg</td>
-                                        <td class="table-td">Rp 3,000,000</td>
-                                        <td class="table-td">Rp 1,500,000</td>
-                                        <td class="table-td">Rp 4,000,000</td>
-                                        <td class="table-td">Rp 500,000</td>
-                                        <td class="table-td">
-                                            <div class="flex gap-3">
-                                                <a href="">
-                                                    <i class="fa-regular fa-trash"></i>
-                                                </a>
-                                                <a href="{{ route('admin.transaction.withdrawal.print') }}" target="_blank">
-                                                    <i class="fa-regular fa-print "></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table-td">2</td>
-                                        <td class="table-td">
-                                            <span
-                                                class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Pending
-                                            </span>
-                                        </td>
-                                        <td class="table-td">2024-08-10</td>
-                                        <td class="table-td">2024-08-15</td>
-                                        <td class="table-td">September 2024</td>
-                                        <td class="table-td">2000 kg</td>
-                                        <td class="table-td">Rp 4,000,000</td>
-                                        <td class="table-td">Rp 2,000,000</td>
-                                        <td class="table-td">Rp 5,500,000</td>
-                                        <td class="table-td">Rp 500,000</td>
-                                        <td class="table-td">
-                                            <div class="flex gap-3">
-                                                <a href="">
-                                                    <i class="fa-regular fa-trash"></i>
-                                                </a>
-                                                <a href="{{ route('admin.transaction.withdrawal.print') }}" target="_blank">
-                                                    <i class="fa-regular fa-print"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @foreach ($data as $key => $el)
+                                        <tr>
+                                            <td class="table-td">{{$key+1}}</td>
+                                            <td class="table-td">
+                                                <span
+                                                    class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Pending
+                                                </span>
+                                            </td>
+                                            <td class="table-td">{{$el->created_at}}</td>
+                                            <td class="table-td">{{$el->date_start}} - {{$el->date_end}}</td>
+                                            <td class="table-td">{{formatMoney($el->total_scales_withdrawn)}} Kg</td>
+                                            <td class="table-td">{{formatMoney($el->total_honorarium_collector,true)}}</td>
+                                            <td class="table-td">{{formatMoney($el->total_honorarium_farmer,true)}}</td>
+                                            <td class="table-td">-</td>
+                                            <td class="table-td">-</td>
+                                            <td class="table-td">
+                                                <div class="flex gap-3">
+                                                    <a href="">
+                                                        <i class="fa-regular fa-eye"></i>
+                                                    </a>
+                                                    <a href="">
+                                                        <i class="fa-regular fa-trash"></i>
+                                                    </a>
+                                                    <a href="{{ route('admin.transaction.withdrawal.print') }}"
+                                                        target="_blank">
+                                                        <i class="fa-regular fa-print"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
                                 </tbody>
                             </table>
                         </div>

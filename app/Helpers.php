@@ -18,3 +18,14 @@ if (!function_exists('formatMoney')) {
         }
     }
 }
+
+if (!function_exists('strReplace')) {
+    function strReplace($value)
+    {
+        // Ganti koma menjadi titik (untuk desimal), lalu hapus titik (pemecah ribuan)
+        $value = str_replace(",", ".", str_replace(".", "", $value));
+        return (float) $value;  // Konversi ke float agar bisa dipakai dalam operasi matematika
+    }
+}
+
+

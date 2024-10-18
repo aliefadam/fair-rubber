@@ -18,6 +18,6 @@ class Collector extends Model
 
     public function rubberCollected()
     {
-    return $this->hasMany(RubberCollected::class);
+        return $this->hasMany(RubberCollected::class);
     }
 }
