@@ -40,7 +40,7 @@
         <ul class="sidebar-menu">
             <li class="sidebar-menu-title">Menu</li>
             <li>
-                <a href="/admin" class="navItem active">
+                <a href="/admin" class="navItem {{ request()->is('admin') ? 'active' : '' }}">
                     <span class="flex items-center gap-2">
                         <i class="fa-regular fa-home"></i>
                         <span>Dashboard</span>
@@ -49,7 +49,8 @@
             </li>
             <li class="sidebar-menu-title">Master</li>
             <li>
-                <a href="{{ route('admin.master.collector.index') }}" class="navItem">
+                <a href="{{ route('admin.master.collector.index') }}"
+                    class="navItem {{ request()->is('admin/master/collector') || request()->is('admin/master/collector/*') || request()->is('admin/master/data/*') ? 'active' : '' }}">
                     <span class="flex items-center gap-2">
                         <i class="fa-regular fa-users"></i>
                         <span>Kolektor</span>
@@ -58,7 +59,8 @@
             </li>
             <li class="sidebar-menu-title">Transaction</li>
             <li>
-                <a href="{{ route('admin.transaction.rubber-collected.index') }}" class="navItem">
+                <a href="{{ route('admin.transaction.rubber-collected.index') }}"
+                    class="navItem {{ request()->is('admin/transaction/rubber-collected') || request()->is('admin/transaction/rubber-collected/*') ? 'active' : '' }}">
                     <span class="flex items-center gap-2">
                         <i class="fa-regular fa-scale-unbalanced-flip"></i>
                         <span>Nota Timbangan</span>
@@ -66,7 +68,8 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.transaction.withdrawal.index') }}" class="navItem">
+                <a href="{{ route('admin.transaction.withdrawal.index') }}"
+                    class="navItem {{ request()->is('admin/transaction/withdrawal') || request()->is('admin/transaction/withdrawal/*') ? 'active' : '' }}">
                     <span class="flex items-center gap-2">
                         <i class="fa-regular fa-money-from-bracket"></i>
                         <span>Penarikan</span>
@@ -74,7 +77,8 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.transaction.report.index') }}" class="navItem">
+                <a href="{{ route('admin.transaction.report.index') }}"
+                    class="navItem {{ request()->is('admin/transaction/report') ? 'active' : '' }}">
                     <span class="flex items-center gap-2">
                         <i class="fa-regular fa-list"></i>
                         <span>Laporan</span>

@@ -1079,15 +1079,15 @@
 
                             <li>
 
-                                {{-- <form action="{{ route('logout') }}" method="POST" class="text-center px-4 py-2"
+                                <form action="{{ route('logout') }}" method="POST" class="text-center px-4 py-2"
                                     role="search">
                                     @csrf
                                     @method('DELETE')
-                                <button type="submit"
-                                    class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full w-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                                    <i class="fa-regular fa-left-from-bracket mr-1.5"></i> Logout
-                                </button>
-                                </form> --}}
+                                    <button type="submit"
+                                        class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full w-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                        <i class="fa-regular fa-left-from-bracket mr-1.5"></i> Logout
+                                    </button>
+                                </form>
 
                             </li>
                         </ul>
