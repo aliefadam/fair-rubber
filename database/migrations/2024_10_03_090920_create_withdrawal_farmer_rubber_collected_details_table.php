@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('withdrawal_farmer_rubber_collected_id');
             $table->foreignId('rubber_collected_id');
+            $table->string('opinion');
             $table->timestamps();
         });
     }

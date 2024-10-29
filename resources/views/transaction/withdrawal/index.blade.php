@@ -90,22 +90,24 @@
                                 <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
                                     @foreach ($data as $key => $el)
                                         <tr>
-                                            <td class="table-td">{{$key+1}}</td>
+                                            <td class="table-td">{{ $key + 1 }}</td>
                                             <td class="table-td">
                                                 <span
                                                     class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Pending
                                                 </span>
                                             </td>
-                                            <td class="table-td">{{$el->created_at}}</td>
-                                            <td class="table-td">{{$el->date_start}} - {{$el->date_end}}</td>
-                                            <td class="table-td">{{formatMoney($el->total_scales_withdrawn)}} Kg</td>
-                                            <td class="table-td">{{formatMoney($el->total_honorarium_collector,true)}}</td>
-                                            <td class="table-td">{{formatMoney($el->total_honorarium_farmer,true)}}</td>
+                                            <td class="table-td">{{ $el->created_at }}</td>
+                                            <td class="table-td">{{ formatDate($el->date_start,false) }} s/d {{ formatDate($el->date_end,false) }}</td>
+                                            <td class="table-td">{{ formatMoney($el->total_scales_withdrawn) }} Kg</td>
+                                            <td class="table-td">{{ formatMoney($el->total_honorarium_collector, true) }}
+                                            </td>
+                                            <td class="table-td">{{ formatMoney($el->total_honorarium_farmer, true) }}</td>
                                             <td class="table-td">-</td>
                                             <td class="table-td">-</td>
                                             <td class="table-td">
                                                 <div class="flex gap-3">
-                                                    <a href="">
+                                                    <a href="{{ route('admin.transaction.withdrawal.detail-withdrawal',$el->id) }}"
+                                                        target="_blank">
                                                         <i class="fa-regular fa-eye"></i>
                                                     </a>
                                                     <a href="">

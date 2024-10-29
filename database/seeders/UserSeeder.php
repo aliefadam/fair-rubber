@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
         User::create([
             "name" => "Admin",
             "email" => "admin@fairrubber.com",
+            'employee_id'=>1,
             "password" => bcrypt("admin123"),
         ]);
     }

@@ -9,4 +9,5 @@ class WithdrawalFarmerRubberCollectedDetails extends Model
 {
     use HasFactory;
     protected $guarded = ["id"];
+    
 }

@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 if (! function_exists('getGender')) {
     function getGender($gender)
     {
@@ -28,4 +30,13 @@ if (!function_exists('strReplace')) {
     }
 }
 
+if (!function_exists('formatDate')) {
+    function formatDate($value)
+    {
+        $date = Carbon::parse($value)->locale('id');
 
+        $date->settings(['formatFunction' => 'translatedFormat']);
+
+        return $date->format('l, j F Y');
+    }
+}

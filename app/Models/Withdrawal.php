@@ -9,4 +9,14 @@ class Withdrawal extends Model
 {
     use HasFactory;
     protected $guarded = ["id"];
+
+    function withdrawalCollectorDetail()
+    {
+        return $this->hasMany(WithdrawalCollectorDetails::class);
+    }
+
+    function withdrawalFarmerDetail()
+    {
+        return $this->hasMany(WithdrawalFarmerDetails::class);
+    }
 }

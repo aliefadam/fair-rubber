@@ -60,24 +60,34 @@ class WithdrawalController extends Controller
             $data[$i]['collector_name'] = $collector[$i]->name;
             $data[$i]['collector_village'] = $collector[$i]->village;
 
-            // mencari data total yang ingin dicarikan collector
+            // Mencari data total yang ingin dicarikan collector
             for ($j = 0; $j < count($collector[$i]->rubberCollected); $j++) {
-                // belum cair
-                if ($collector[$i]->rubberCollected[$j]->status == 1) {
+                // Belum cair
+                if (
+                    $collector[$i]->rubberCollected[$j]->status == 1 ||
+                    ($collector[$i]->rubberCollected[$j]->total_honorarium_collector != $collector[$i]->rubberCollected[$j]->total_honorarium_collector_withdrawn)
+                ) {
+
                     if ($collector[$i]->rubberCollected[$j]->date >= $req->date_start && $collector[$i]->rubberCollected[$j]->date <= $req->date_end) {
 
-                        $data[$i]['rubber'][$j]['remaining_honorarium'] = $collector[$i]->rubberCollected[$j]->total_honorarium_collector - $collector[$i]->rubberCollected[$j]->total_honorarium_collector_withdrawn;
-                        $data[$i]['rubber'][$j]['status'] = $collector[$i]->rubberCollected[$j]->status;
-                        $data[$i]['rubber'][$j]['id'] = $collector[$i]->rubberCollected[$j]->id;
+                        // Tambahkan data rubber dimulai dari index 0
+                        $data[$i]['rubber'][] = [
+                            'remaining_honorarium' => $collector[$i]->rubberCollected[$j]->total_honorarium_collector - $collector[$i]->rubberCollected[$j]->total_honorarium_collector_withdrawn,
+                            'status' => $collector[$i]->rubberCollected[$j]->status,
+                            'id' => $collector[$i]->rubberCollected[$j]->id
+                        ];
 
-                        $total_unpaid_collector += $data[$i]['rubber'][$j]['remaining_honorarium'];
+                        $total_unpaid_collector += end($data[$i]['rubber'])['remaining_honorarium'];
                     }
                 }
-                // sudah cair
+                // Sudah cair
                 if ($collector[$i]->rubberCollected[$j]->status == 2) {
                     $total_paid_collector += $collector[$i]->rubberCollected[$j]->total_honorarium_collector_withdrawn;
                 }
             }
+
+
+
 
             // set variable untuk pertambahan petani
             $total_paid_farmer = 0;
@@ -177,8 +187,10 @@ class WithdrawalController extends Controller
                     }
                 }
             }
-
+            // mengulang index dari 0
             $data[$i]['farmer'] = array_values($data[$i]['farmer']);
+
+            // $data[$i]['rubber'] = array_values($data[$i]['rubber']);
 
             $data[$i]['total_paid_collector'] = $total_paid_collector;
             $data[$i]['total_unpaid_collector'] = $total_unpaid_collector;
@@ -303,6 +315,7 @@ class WithdrawalController extends Controller
                         $datawithdrawalFarmer[$i][$farmerId]['kg'] = isset($input['unpaid_kg_farmer_id_' . $farmerId . '_' . $collectorId]) ? strReplace($input['unpaid_kg_farmer_id_' . $farmerId . '_' . $collectorId]) : 0;
                         $datawithdrawalFarmer[$i][$farmerId]['farmer_id'] = $farmerId;
                         $datawithdrawalFarmer[$i][$farmerId]['rubber_collected_id'] = isset($input['farmer_id_rubber_collected_' . $farmerId . '_' . $collectorId]) ? $input['farmer_id_rubber_collected_' . $farmerId . '_' . $collectorId] : [];
+                        $datawithdrawalFarmer[$i][$farmerId]['opinion'] = isset($input['opinion_' . $farmerId . '_' . $collectorId]) ? $input['opinion_' . $farmerId . '_' . $collectorId] : 'Wajar';
                     }
                 }
             }
@@ -334,7 +347,7 @@ class WithdrawalController extends Controller
 
             for ($i = 0; $i < count($datawithdrawalCollector); $i++) {
                 $dataWithdrawalCollectorDetails = WithdrawalCollectorDetails::create([
-                    'withdawal_id' => $datawithdrawal['id'],
+                    'withdrawal_id' => $datawithdrawal['id'],
                     'collector_id' => $datawithdrawalCollector[$i]['collector_id'],
                     'total_honorarium_withdrawn' => $datawithdrawalCollector[$i]['total_unpaid_collector'],
                     'total_honorarium_remaining_withdrawn' => $datawithdrawalCollector[$i]['total_honorarium_remaining_withdrawn'],
@@ -363,7 +376,7 @@ class WithdrawalController extends Controller
 
                     // Buat WithdrawalCollectorRubberCollectedDetails
                     WithdrawalCollectorRubberCollectedDetails::create([
-                        'withdrawal_collector_rubber_collected_id' => $dataWithdrawalCollectorDetails->id,
+                        'withdrawal_collector_details_id' => $dataWithdrawalCollectorDetails->id,
                         'rubber_collected_id' => $datawithdrawalCollector[$i]['total_unpaid_collector_rubber_collected_id'][$j],
                     ]);
 
@@ -383,15 +396,16 @@ class WithdrawalController extends Controller
             for ($i = 0; $i < count($datawithdrawalFarmer); $i++) {
                 for ($j = 0; $j < count($datawithdrawalFarmer[$i]); $j++) {
                     $dataWithdrawalFarmerDetails[$i] = WithdrawalFarmerDetails::create([
-                        'withdawal_id' => $datawithdrawal['id'],
+                        'withdrawal_id' => $datawithdrawal['id'],
                         'farmer_id' => $datawithdrawalFarmer[$i][$j]['farmer_id'],
                         'total_scales_withdrawn' => $datawithdrawalFarmer[$i][$j]['kg'],
                         'total_honorarium_withdrawn' => $datawithdrawalFarmer[$i][$j]['total'],
+                        'opinion' => $datawithdrawalFarmer[$i][$j]['opinion'],
                         'status' => 1,
                     ]);
                     for ($k = 0; $k < count($datawithdrawalFarmer[$i][$j]['rubber_collected_id']); $k++) {
                         WithdrawalFarmerRubberCollectedDetails::create([
-                            'withdrawal_farmer_rubber_collected_id' => $dataWithdrawalFarmerDetails[$i]['id'],
+                            'withdrawal_farmer_details_id' => $dataWithdrawalFarmerDetails[$i]['id'],
                             'rubber_collected_id' => $datawithdrawalFarmer[$i][$j]['rubber_collected_id'][$k],
                         ]);
 
@@ -421,6 +435,123 @@ class WithdrawalController extends Controller
         // return
     }
 
+
+    function dataDetail($id)
+    {
+        // return $id;
+        $dataRaw = Withdrawal::with(
+            'withdrawalCollectorDetail',
+            'withdrawalCollectorDetail.collector',
+            'withdrawalCollectorDetail.withdrawalCollectorRubberCollectedDetail',
+            'withdrawalFarmerDetail',
+            'withdrawalFarmerDetail.farmer',
+            'withdrawalFarmerDetail.withdrawalFarmerRubberCollectedDetail'
+        )->where('id', $id)->first()->toArray();
+
+        // return $dataRaw;
+        // return $dataRaw['withdrawal_collector_detail'];
+
+        $data = [];
+
+        // Mengolah data array diawali dari collector
+        for ($i = 0; $i < count($dataRaw['withdrawal_collector_detail']); $i++) {
+            // mencati data collector id,name,village 
+            $data[$i]['collector_id'] = $dataRaw['withdrawal_collector_detail'][$i]['collector']['id'];
+            $data[$i]['collector_name'] = $dataRaw['withdrawal_collector_detail'][$i]['collector']['name'];
+            $data[$i]['collector_village'] = $dataRaw['withdrawal_collector_detail'][$i]['collector']['village'];
+
+            // mencati data collector total premi,total sisa premi yang di withdrawn, total premi yang seharusnya di carikan 
+            $data[$i]['total_honorarium_withdrawn'] = $dataRaw['withdrawal_collector_detail'][$i]['total_honorarium_withdrawn'];
+            $data[$i]['total_honorarium_remaining_withdrawn'] = $dataRaw['withdrawal_collector_detail'][$i]['total_honorarium_remaining_withdrawn'];
+            $data[$i]['total_honorarium_should_withdrawn'] = $dataRaw['withdrawal_collector_detail'][$i]['total_honorarium_should_withdrawn'];
+
+
+            $data[$i]['total_paid_collector'] = 0;
+            $data[$i]['total_unpaid_collector'] = 0;
+            $data[$i]['total_paid_farmer'] = 0;
+            $data[$i]['total_unpaid_farmer'] = 0;
+            $data[$i]['total_paid_kg_farmer'] = 0;
+            $data[$i]['total_unpaid_kg_farmer'] = 0;
+
+            // "total_paid_collector": 0,
+            // "total_unpaid_collector": 0,
+            // "total_paid_farmer": 0,
+            // "total_unpaid_farmer": 0,
+            // "total_paid_kg_farmer": 0,
+            // "total_unpaid_kg_farmer": 0
+
+            $total_scales_withdrawn = 0;
+            $total_honorarium_farmer_withdrawn = 0;
+
+            // melakukan loop pada data petani 
+            for ($j = 0; $j < count($dataRaw['withdrawal_farmer_detail']); $j++) {
+                //  mengecek data petani dan mencocokan dengan id collector 
+                if ($dataRaw['withdrawal_farmer_detail'][$j]['farmer']['collector_id'] ==  $dataRaw['withdrawal_collector_detail'][$i]['collector']['id']) {
+                    //  memasang data petani pada collector diatas
+
+                    $total_scales_withdrawn += $dataRaw['withdrawal_farmer_detail'][$j]['total_scales_withdrawn'];
+                    $total_honorarium_farmer_withdrawn += $dataRaw['withdrawal_farmer_detail'][$j]['total_honorarium_withdrawn'];
+                    
+
+                    $data[$i]['farmer'][$j] = [
+                        'id' => $dataRaw['withdrawal_farmer_detail'][$j]['farmer']['id'],
+                        'name' => $dataRaw['withdrawal_farmer_detail'][$j]['farmer']['name'],
+                        'village' => $dataRaw['withdrawal_farmer_detail'][$j]['farmer']['village'],
+                        'account_number' => $dataRaw['withdrawal_farmer_detail'][$j]['farmer']['account_number'],
+                        'total_scales_withdrawn' => $dataRaw['withdrawal_farmer_detail'][$j]['total_scales_withdrawn'],
+                        'total_honorarium_withdrawn' => $dataRaw['withdrawal_farmer_detail'][$j]['total_honorarium_withdrawn'],
+                        'opinion' => $dataRaw['withdrawal_farmer_detail'][$j]['opinion'],
+                        'total_unpaid' => 0,
+                        'total_paid_farmer' => 0,
+                        'unpaid_kg_farmer' => 0,
+                        'total_paid' => 0,
+                        'paid_kg_farmer' => 0,
+                        'paid_kg_farmer' => 0,
+                        'rubber' => [] // Inisialisasi array kosong untuk rubber
+                    ];
+                    // Menambahkan data rubber ke array tanpa meng-overwrite
+                    for ($k = 0; $k < count($dataRaw['withdrawal_farmer_detail'][$j]['withdrawal_farmer_rubber_collected_detail']); $k++) {
+                        $data[$i]['farmer'][$j]['rubber'][] = $dataRaw['withdrawal_farmer_detail'][$j]['withdrawal_farmer_rubber_collected_detail'][$k]['rubber_collected_id'];
+                    }
+                }
+            }
+
+            $data[$i]['farmer'] = array_values($data[$i]['farmer']);
+
+            $data[$i]['total_scales_withdrawn'] = $total_scales_withdrawn;
+            $data[$i]['total_honorarium_farmer_withdrawn'] = $total_honorarium_farmer_withdrawn;
+
+        }
+
+
+
+        // return $data;
+        // return $dataRaw['date_start'];
+
+        return view("transaction.withdrawal.detail-withdrawal", [
+            "title" => "Penarikan",
+            'data' => $data,
+            'dataRaw' => $dataRaw,
+        ]);
+        // return $data;
+    }
+    function print($id)
+    {
+        $dataRaw = Withdrawal::with(
+            'withdrawalCollectorDetail',
+            'withdrawalCollectorDetail.withdrawalCollectorRubberCollectedDetail',
+            'withdrawalFarmerDetail',
+            'withdrawalFarmerDetail.withdrawalFarmerRubberCollectedDetail'
+        )->where('id', $id)->first();
+
+        return $dataRaw;
+
+        $data = [];
+        return view("transaction.withdrawal.print", [
+            "title" => "Penarikan",
+            'data' => $data,
+        ]);
+    }
     /**
      * Display the specified resource.
      */

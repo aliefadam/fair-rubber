@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('withdrawal_farmer_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('farmer_id');
-            $table->foreignId('withdawal_id');
+            $table->foreignId('withdrawal_id');
             $table->double('total_scales_withdrawn');
             $table->double('total_honorarium_withdrawn');
             $table->string('proofment')->nullable();

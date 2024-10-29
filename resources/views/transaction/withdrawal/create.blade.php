@@ -522,11 +522,11 @@
                                                         {{ $data[$i]['farmer'][$j]['account_number'] }}
                                                     </td>
                                                     <td class="text-center">
-                                                        <select name="" id=""
+                                                        <select name="opinion_{{ $data[$i]['farmer'][$j]['id'] }}_{{ $data[$i]['collector_id'] }}" id=""
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                            <option value="" @selected($data[$i]['farmer'][$j]['unpaid_kg_farmer'] < 500 ? 'selected' : '')>Wajar
+                                                            <option value="wajar" @selected($data[$i]['farmer'][$j]['unpaid_kg_farmer'] < 500 ? 'selected' : '')>Wajar
                                                             </option>
-                                                            <option value="" @selected($data[$i]['farmer'][$j]['unpaid_kg_farmer'] >= 500 ? 'selected' : '')>Tidak Wajar
+                                                            <option value="tidak wajar" @selected($data[$i]['farmer'][$j]['unpaid_kg_farmer'] >= 500 ? 'selected' : '')>Tidak Wajar
                                                             </option>
                                                         </select>
                                                     </td>

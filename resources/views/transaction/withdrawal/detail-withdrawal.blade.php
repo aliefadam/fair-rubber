@@ -3,11 +3,23 @@
     <!-- BEGIN: Breadcrumb -->
     {{-- <x-breadcrum grandparent="Master" parent="Produk" :current="$title" :route="route('admin.master-data.brand.create')"></x-breadcrum> --}}
     <div action="" class="bg-white dark:bg-slate-800 shadow-md rounded-lg p-5">
-        <h1 class="text-xl font-medium ">Filter Tanggal</h1>
-        <br>
+        {{-- <h1 class="text-xl font-medium ">Data </h1> --}}
+        {{-- <br> --}}
         <form action="{{ route('admin.transaction.withdrawal.create') }}">
 
             <div class="flex items-end gap-7">
+                <div class="flex-[1]">
+                    <h6 class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Tanggal Mulai </h6>
+                    <h4 class="font-semibold">{{ formatDate($dataRaw['date_start']) }}</h4>
+                </div>
+
+                <div class="flex-[1]">
+                    <h6 class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Tanggal Akhir </h6>
+                    <h4 class="font-semibold">{{ formatDate($dataRaw['date_end']) }}</h4>
+                </div>
+            </div>
+
+            <div class="flex items-end gap-7 mt-2">
                 <div class="flex-[4]">
 
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload
@@ -21,7 +33,7 @@
                 <div class="flex-[1]">
                     <button type="submit"
                         class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        <i class="fa-regular fa-magnifying-glass mr-1"></i> Simpan
+                        <i class="fa-regular fa-save mr-1"></i> Simpan
                     </button>
                 </div>
 
@@ -39,7 +51,7 @@
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
+                        {{-- <tr>
                             <th colspan="4" class="dark:bg-gray-800 dark:border-gray-500"></th>
                             <th scope="col" colspan="3"
                                 class="text-center px-6 py-3 bg-gray-100 dark:bg-gray-800 dark:border-gray-500 border-b border-gray-300">
@@ -49,15 +61,15 @@
                                 class="text-center px-6 py-3 bg-gray-200 dark:bg-gray-800 dark:border-gray-500 border-b border-gray-400">
                                 Sudah Salurkan
                             </th>
-                        </tr>
+                        </tr> --}}
                         <tr>
-                            <th scope="col" class="p-4 dark:bg-gray-800 dark:border-gray-500">
+                            {{-- <th scope="col" class="p-4 dark:bg-gray-800 dark:border-gray-500">
                                 <div class="flex items-center">
                                     <input id="checkbox-all-search" type="checkbox"
                                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700">
                                     <label for="checkbox-all-search" class="sr-only">checkbox</label>
                                 </div>
-                            </th>
+                            </th> --}}
                             <th scope="col" rowspan="2" class="text-center p-4 dark:bg-gray-800 dark:border-gray-500">
                                 No
                             </th>
@@ -81,7 +93,7 @@
                                 class="text-center px-6 py-3 bg-gray-100 dark:bg-gray-800 dark:border-gray-500 min-w-[300px]">
                                 Premi Kolektor
                             </th>
-                            <th scope="col"
+                            {{-- <th scope="col"
                                 class="text-center px-6 py-3 bg-gray-200 dark:bg-gray-800 dark:border-gray-500 min-w-[200px]">
                                 Total Timbangan
                             </th>
@@ -92,7 +104,7 @@
                             <th scope="col"
                                 class="text-center px-6 py-3 bg-gray-200 dark:bg-gray-800 dark:border-gray-500 min-w-[300px]">
                                 Premi Kolektor
-                            </th>
+                            </th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -106,6 +118,11 @@
                             $totalFarmerScalesPaid = 0;
                             $totalFarmerScalesKgPaid = 0;
 
+                            $totalScalesWithdrawn = 0;
+                            $totalHonorariumFarmerWithdrawn = 0;
+
+                            $totalHonorariumCollectorWithdrawn = 0
+
                         @endphp
 
                         @for ($i = 0; $i < count($data); $i++)
@@ -114,23 +131,26 @@
                             @php
 
                                 // $totalCollectorScalesUnpaid += $data[$i]['total_unpaid_collector'];
-                                $totalCollectorScalesPaid += $data[$i]['total_paid_collector'];
+                                $totalScalesWithdrawn += $data[$i]['total_scales_withdrawn'];
+                                $totalHonorariumFarmerWithdrawn += $data[$i]['total_honorarium_farmer_withdrawn'];
+
+                                $totalHonorariumCollectorWithdrawn += $data[$i]['total_honorarium_withdrawn'];
                                 // $totalFarmerScalesUnpaid += $data[$i]['total_unpaid_farmer'];
                                 // $totalFarmerScalesKgUnpaid += $data[$i]['total_unpaid_kg_farmer'];
-                                $totalFarmerScalesPaid += $data[$i]['total_paid_farmer'];
-                                $totalFarmerScalesKgPaid += $data[$i]['total_paid_kg_farmer'];
+                                // $totalFarmerScale    sPaid += $data[$i]['total_paid_farmer'];
+                                // $totalFarmerScalesKgPaid += $data[$i]['total_paid_kg_farmer'];
 
                             @endphp
                             <tr
                                 class="data-detail-collector bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="w-4 p-4">
+                                {{-- <td class="w-4 p-4">
                                     <div class="flex items-center">
                                         <input id="checkbox-table-search-1" type="checkbox"
                                             class="checked_collector w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                             name="checkbox_collector_{{ $data[$i]['collector_id'] }}">
                                         <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                     </div>
-                                </td>
+                                </td> --}}
                                 <td class="px-6 py-4">1</td>
                                 <td class="px-6 py-4"><button
                                         data-modal-target="modal-collector-{{ $data[$i]['collector_id'] }}"
@@ -141,10 +161,10 @@
                                 <td class="px-6 py-4">
 
                                     <div class="relative">
-                                        <input type="text" id="email-address-icon"
-                                            class="total_unpaid_kg_farmer total_unpaid_kg_farmer_{{ $data[$i]['collector_id'] }} bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pe-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
-                                            placeholder="0">
-                                        {{-- value=" {{ formatMoney($data[$i]['total_unpaid_kg_farmer']) }} "> --}}
+                                        <input type="text" readonly id="email-address-icon"
+                                            class="total_scales_withdrawn total_scales_withdrawn_{{ $data[$i]['collector_id'] }} bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pe-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
+                                            placeholder="0"
+                                            value=" {{ formatMoney($data[$i]['total_scales_withdrawn']) }} ">
                                         <div class="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none">
                                             Kg
                                         </div>
@@ -157,9 +177,10 @@
                                             class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                                             Rp.
                                         </span>
-                                        <input type="text" id="website-admin"
-                                            class="total_unpaid_farmer total_unpaid_farmer_{{ $data[$i]['collector_id'] }} rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
-                                            placeholder="0" {{-- value="{{ formatMoney($data[$i]['total_unpaid_farmer']) }} "> --}}>
+                                        <input type="text" readonly id="website-admin"
+                                            class="total_honorarium_farmer_withdrawn total_honorarium_farmer_withdrawn_{{ $data[$i]['collector_id'] }} rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
+                                            placeholder="0" 
+                                            value="{{ formatMoney($data[$i]['total_honorarium_farmer_withdrawn']) }} ">
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
@@ -168,12 +189,12 @@
                                             class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                                             Rp.
                                         </span>
-                                        <input type="text" id="website-admin"
-                                            class="total_unpaid_collector rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
-                                            placeholder="0" value="{{ formatMoney($data[$i]['total_unpaid_collector']) }}">
+                                        <input type="text" readonly id="website-admin"
+                                            class="total_honorarium_withdrawn rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
+                                            placeholder="0" value="{{ formatMoney($data[$i]['total_honorarium_withdrawn']) }}">
                                     </div>
                                 </td>
-                                <td class="px-6 py-4">
+                                {{-- <td class="px-6 py-4">
 
                                     <div class="relative">
                                         <input type="text" id="email-address-icon"
@@ -206,7 +227,7 @@
                                             class="rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end"
                                             placeholder="0" value="{{ formatMoney($data[$i]['total_paid_collector']) }}">
                                     </div>
-                                </td>
+                                </td> --}}
                             </tr>
                         @endfor
 
@@ -215,27 +236,27 @@
 
                         <tr
                             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th class="px-6 py-4" colspan="4">
+                            <th class="px-6 py-4" colspan="3">
                                 <p class="text-[15px] font-semibold text-end">Total</p>
                             </th>
                             <th class="px-6 py-4 text-end">
-                                <p class="text-[15px] font-semibold totalFarmerScalesKgUnpaid">
-                                    {{ $totalFarmerScalesKgUnpaid }} Kg </p>
-                                <input type="hidden" class="totalFarmerScalesKgUnpaidValue" name="">
+                                <p class="text-[15px] font-semibold totalScalesWithdrawn">
+                                    {{ $totalScalesWithdrawn }} Kg </p>
+                                <input type="hidden" class="totalScalesWithdrawnValue" value="{{$totalScalesWithdrawn}}" name="">
                             </th>
                             <th class="px-6 py-4 text-end">
-                                <p class="text-[15px] font-semibold totalFarmerScalesUnpaid">
-                                    {{ formatMoney($totalFarmerScalesUnpaid, true) }}
+                                <p class="text-[15px] font-semibold totalHonorariumFarmerWithdrawn">
+                                    {{ formatMoney($totalHonorariumFarmerWithdrawn, true) }}
                                 </p>
-                                <input type="hidden" class="totalFarmerScalesUnpaidValue" name="">
+                                <input type="hidden" class="totalHonorariumFarmerWithdrawnValue" value="{{$totalHonorariumFarmerWithdrawn}}" name="">
                             </th>
                             <th class="px-6 py-4 text-end">
-                                <p class="text-[15px] font-semibold totalCollectorScalesUnpaid">
-                                    {{ formatMoney($totalCollectorScalesUnpaid, true) }}
+                                <p class="text-[15px] font-semibold totalHonorariumCollectorWithdrawn">
+                                    {{ formatMoney($totalHonorariumCollectorWithdrawn, true) }}
                                 </p>
-                                <input type="hidden" class="totalCollectorScalesUnpaidValue" name="">
+                                <input type="hidden" class="totalHonorariumCollectorWithdrawnValue" name="">
                             </th>
-                            <th class="px-6 py-4 text-end">
+                            {{-- <th class="px-6 py-4 text-end">
                                 <p class="text-[15px] font-semibold"> {{ $totalFarmerScalesKgPaid }} Kg </p>
                             </th>
                             <th class="px-6 py-4 text-end">
@@ -244,7 +265,7 @@
                             <th class="px-6 py-4 text-end">
                                 <p class="text-[15px] font-semibold"> {{ formatMoney($totalCollectorScalesPaid, true) }}
                                 </p>
-                            </th>
+                            </th> --}}
                         </tr>
                     </tfoot>
                 </table>
@@ -280,7 +301,7 @@
                                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     <thead
                                         class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                        <tr>
+                                        {{-- <tr>
                                             <th colspan="4"></th>
                                             <th scope="col" colspan="2"
                                                 class="text-center px-6 py-3 bg-gray-100 border-b border-gray-300">
@@ -292,22 +313,24 @@
                                             </th>
                                             <th colspan="2"></th>
 
-                                        </tr>
+                                        </tr> --}}
                                         <tr>
-                                            <th scope="col" class="p-4">
+                                            {{-- <th scope="col" class="p-4">
                                                 <div class="flex items-center">
                                                     <input id="checkbox-all-search" type="checkbox"
                                                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                                     <label for="checkbox-all-search" class="sr-only">checkbox</label>
                                                 </div>
-                                            </th>
+                                            </th> --}}
                                             <th scope="col" rowspan="2" class="text-center p-4">
                                                 No
                                             </th>
                                             <th scope="col" class="text-start px-6 py-3 min-w-[250px] ">
                                                 Nama Petani
                                             </th>
-
+                                            <th scope="col" class="text-start px-6 py-3 min-w-[200px] ">
+                                                Bukti Data Tidak Wajar
+                                            </th>
                                             <th scope="col" class="text-start px-6 py-3 min-w-[200px] ">
                                                 Desa
                                             </th>
@@ -317,13 +340,13 @@
                                             <th scope="col" class="text-center px-6 py-3 bg-gray-100 min-w-[300px]">
                                                 Premi Petani
                                             </th>
-
+                                            {{-- 
                                             <th scope="col" class="text-center px-6 py-3 bg-gray-200 min-w-[200px]">
                                                 Total Timbangan
                                             </th>
                                             <th scope="col" class="text-center px-6 py-3 bg-gray-200 min-w-[300px]">
                                                 Premi Petani
-                                            </th>
+                                            </th> --}}
                                             <th scope="col" rowspan="2"
                                                 class="text-center px-6 py-3  min-w-[300px]">
                                                 No. Rekening
@@ -338,10 +361,8 @@
                                     <tbody>
                                         @php
 
-                                            $subTotalFarmerScalesUnpaid = 0;
-                                            $subTotalFarmerScalesKgUnpaid = 0;
-                                            $subTotalFarmerScalesPaid = 0;
-                                            $subTotalFarmerScalesKgPaid = 0;
+                                            $subTotalFarmerScalesWithdrawn = 0;
+                                            $subTotalFarmerScalesKgWithdrawn = 0;
 
                                         @endphp
                                         @isset($data[$i]['farmer'])
@@ -351,13 +372,10 @@
 
                                                 @php
 
-                                                    $subTotalFarmerScalesUnpaid +=
-                                                        $data[$i]['farmer'][$j]['total_unpaid'];
-                                                    $subTotalFarmerScalesKgUnpaid +=
-                                                        $data[$i]['farmer'][$j]['unpaid_kg_farmer'];
-                                                    $subTotalFarmerScalesPaid += $data[$i]['farmer'][$j]['total_paid'];
-                                                    $subTotalFarmerScalesKgPaid +=
-                                                        $data[$i]['farmer'][$j]['paid_kg_farmer'];
+                                                    $subTotalFarmerScalesWithdrawn +=
+                                                        $data[$i]['farmer'][$j]['total_scales_withdrawn'];
+                                                    $subTotalFarmerScalesKgWithdrawn +=
+                                                        $data[$i]['farmer'][$j]['total_honorarium_withdrawn'];
 
                                                 @endphp
                                                 <tr
@@ -368,7 +386,7 @@
                                                         bg-white hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-600 @endif
                                                     
                                                     border-b dark:border-gray-700  ">
-                                                    @if ($data[$i]['farmer'][$j]['id'] != null)
+                                                    {{-- @if ($data[$i]['farmer'][$j]['id'] != null)
                                                         <td class="w-4 p-4">
 
                                                             <input type="hidden" value="{{ $data[$i]['collector_id'] }}"
@@ -387,18 +405,18 @@
                                                         </td>
                                                     @else
                                                         <td class="w-4 p-4"> - </td>
-                                                    @endif
+                                                    @endif --}}
                                                     <td class="px-6 py-4">{{ $j + 1 }}</td>
                                                     <td class="px-6 py-4">{{ $data[$i]['farmer'][$j]['name'] }}
 
-                                                        <br>
-                                                        <input
-                                                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                                            id="file_input" type="file">
+
                                                     </td>
                                                     <td class="px-6 py-4">
-
-
+                                                        @if ($data[$i]['farmer'][$j]['opinion'] == 'tidak wajar')
+                                                            <input
+                                                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                                                id="file_input" type="file">
+                                                        @endif
 
                                                     </td>
                                                     <td class="px-6 py-4">{{ $data[$i]['farmer'][$j]['village'] }}</td>
@@ -407,11 +425,11 @@
                                                         <div class="relative">
                                                             <input type="text" id="email-address-icon"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pe-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end 
-                                                                unpaid_kg_farmer_id_{{ $data[$i]['farmer'][$j]['id'] }}_{{ $data[$i]['collector_id'] }}
-                                                                unpaid_kg_farmer_id_{{ $data[$i]['collector_id'] }}
+                                                                total_scales_withdrawn_farmer_id_{{ $data[$i]['farmer'][$j]['id'] }}_{{ $data[$i]['collector_id'] }}
+                                                                total_scales_withdrawn_farmer_id_{{ $data[$i]['collector_id'] }}
                                                                 "
                                                                 placeholder="0"
-                                                                value="{{ formatMoney($data[$i]['farmer'][$j]['unpaid_kg_farmer']) }}">
+                                                                value="{{ formatMoney($data[$i]['farmer'][$j]['total_scales_withdrawn']) }}">
                                                             <div
                                                                 class="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none">
                                                                 Kg
@@ -427,16 +445,16 @@
                                                             </span>
                                                             <input type="text" id="website-admin"
                                                                 class="rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-end  
-                                                                unpaid_farmer_id_{{ $data[$i]['farmer'][$j]['id'] }}_{{ $data[$i]['collector_id'] }}
-                                                                unpaid_farmer_id_{{ $data[$i]['collector_id'] }}
+                                                                total_honorarium_withdrawn_id_{{ $data[$i]['farmer'][$j]['id'] }}_{{ $data[$i]['collector_id'] }}
+                                                                total_honorarium_withdrawn_id_{{ $data[$i]['collector_id'] }}
                                                                 "
                                                                 placeholder="0"
-                                                                name="unpaid_farmer_id_{{ $data[$i]['farmer'][$j]['id'] }}_{{ $data[$i]['collector_id'] }}"
-                                                                value="{{ formatMoney($data[$i]['farmer'][$j]['total_unpaid']) }}">
+                                                                name="total_honorarium_withdrawn_id_{{ $data[$i]['farmer'][$j]['id'] }}_{{ $data[$i]['collector_id'] }}"
+                                                                value="{{ formatMoney($data[$i]['farmer'][$j]['total_honorarium_withdrawn']) }}">
                                                         </div>
                                                     </td>
 
-                                                    <td class="px-6 py-4">
+                                                    {{-- <td class="px-6 py-4">
 
                                                         <div class="relative">
                                                             <input type="text" id="email-address-icon"
@@ -461,13 +479,15 @@
                                                                 placeholder="0"
                                                                 value="{{ formatMoney($data[$i]['farmer'][$j]['total_paid']) }}">
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td class="text-center">{{ $data[$i]['farmer'][$j]['account_number'] }}
                                                     </td>
                                                     <td class="text-center">
-                                                        <select name="" id="">
-                                                            <option value="" @selected($data[$i]['farmer'][$j]['unpaid_kg_farmer'] < 500 ? 'selected' : '')>Wajar</option>
-                                                            <option value="" @selected($data[$i]['farmer'][$j]['unpaid_kg_farmer'] >= 500 ? 'selected' : '')>Tidak Wajar
+                                                        <select name="" id=""
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                            <option value="wajar" @selected($data[$i]['farmer'][$j]['opinion'] == 'wajar' ? 'selected' : '')>Wajar</option>
+                                                            <option value="tidak wajar" @selected($data[$i]['farmer'][$j]['opinion'] == 'tidak wajar' ? 'selected' : '')>Tidak
+                                                                Wajar
                                                             </option>
                                                         </select>
                                                     </td>
@@ -486,21 +506,13 @@
                                             </th>
                                             <th class="px-6 py-4 text-center">
                                                 <p class="text-[15px] font-semibold text-end">
-                                                    {{ formatMoney($subTotalFarmerScalesKgUnpaid) }} KG</p>
-                                                {{-- <input type="hidden" name="" class="drop-total-unpaid-collector-{{ $data[$i]['collector_id'] }}"> --}}
+                                                    {{ formatMoney($subTotalFarmerScalesWithdrawn) }} KG</p>
                                             </th>
                                             <th class="px-6 py-4 text-center">
                                                 <p class="text-[15px] font-semibold text-end">
-                                                    {{ formatMoney($subTotalFarmerScalesUnpaid, true) }}</p>
+                                                    {{ formatMoney($subTotalFarmerScalesKgWithdrawn, true) }}</p>
                                             </th>
-                                            <th class="px-6 py-4 text-center">
-                                                <p class="text-[15px] font-semibold text-end">
-                                                    {{ formatMoney($subTotalFarmerScalesKgPaid) }} KG</p>
-                                            </th>
-                                            <th class="px-6 py-4 text-center">
-                                                <p class="text-[15px] font-semibold text-end">
-                                                    {{ formatMoney($subTotalFarmerScalesPaid, true) }} </p>
-                                            </th>
+                                           
                                             <th class="px-6 py-4 text-center">
                                             </th>
                                             <th class="px-6 py-4 text-center">
@@ -512,7 +524,7 @@
                                         <tr
                                             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                             <th class="px-6 py-4" colspan="4">
-                                                <p class="text-[15px] font-semibold text-start">Total Terpilih (Checked)
+                                                <p class="text-[15px] font-semibold text-start">Total
                                                 </p>
                                             </th>
                                             <th class="px-6 py-4 text-center">
