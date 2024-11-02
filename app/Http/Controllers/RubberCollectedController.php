@@ -88,15 +88,58 @@ class RubberCollectedController extends Controller
      */
     public function show(RubberCollected $rubberCollected)
     {
-        //
+        return view("transaction.rubber-collected.show", [
+            "title" => "Edit Nota Timbangan",
+            "collectors" => Collector::all(),
+            "rubberCollected" => $rubberCollected,
+            "rubberCollectedDetail" => $rubberCollected->rubberCollectedDetail,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(RubberCollected $rubberCollected)
+    public function edit($id, Request $request)
     {
-        //
+        $rubberCollected = RubberCollected::find($id);
+        $rubberCollected->update([
+            "date" => $request->tanggal_penimbangan_pabrik,
+            "total_collector_scales" => $request->total_timbangan_collector,
+            "total_factory_scales" => $request->total_timbangan_pabrik,
+            "total_can_tolerate" => $request->total_dapat_toleransi,
+            "total_honorarium_scales" => $request->total_timbangan_premi,
+            "total_used_scales" => $request->total_timbangan_premi,
+            "max_tolerance_percentage" => $request->max_toleransi_collector,
+            "tolerance_percentage_scales" => $request->toleransi_timbangan,
+            "total_honorarium_farmer" => $request->premi_petani,
+            "total_honorarium_collector" => $request->premi_collector,
+            "total_honorarium_collector_withdrawn" => 0,
+            "description" => $request->deskripsi,
+            "status" => 1,
+        ]);
+
+        // $honorariumFarmer = $rubberCollectedData["total_honorarium_farmer"] / count($dataPetani);
+        RubberCollectedDetail::where(["rubber_collected_id" => $rubberCollected->id])->delete();
+        $dataPetani = $request->data_petani;
+        foreach ($dataPetani as $petani) {
+            RubberCollectedDetail::create([
+                "rubber_collected_id" => $rubberCollected->id,
+                "farmer_id" => $petani["id"],
+                "farmer_name" => $petani["nama"],
+                "farmer_village" => $petani["desa"],
+                "collector_scales" => $petani["timbanganCollector"],
+                "factory_scales" => $petani["timbanganPabrik"],
+                "can_tolerate" => $petani["dapatDitoleransi"],
+                "honorarium_scales" => $petani["timbanganPremi"],
+                "used_scales" => $petani["timbanganPremi"],
+                "honorarium_farmer" => $petani["timbanganPremi"] * 2000,
+                "status" => 1,
+            ]);
+        }
+        return response()->json([
+            "message" => "success",
+            "redirect_url" => route('admin.transaction.rubber-collected.index')
+        ])->setStatusCode(200);
     }
 
     /**

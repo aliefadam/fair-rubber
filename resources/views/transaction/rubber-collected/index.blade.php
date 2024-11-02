@@ -92,12 +92,32 @@
                                             <td class="table-td ">
                                                 {{ formatMoney($rubber_collected->total_honorarium_collector, true) }}</td>
                                             <td class="table-td">
-                                                <a href="javascript:void(0)"
-                                                    data-rubber-collected-id={{ $rubber_collected->id }}
-                                                    data-modal-target="rubber-collected-detail-modal"
-                                                    data-modal-toggle="rubber-collected-detail-modal"
-                                                    class="btn-detail text-blue-700">Lihat
-                                                    Detail</a>
+                                                <button id="dropdownDefaultButton-{{ $rubber_collected->id }}"
+                                                    data-dropdown-toggle="dropdown-Default-{{ $rubber_collected->id }}"
+                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                                    type="button">
+                                                    <i
+                                                        class="fa-regular fa-ellipsis-vertical cursor-pointer text-[16px]"></i>
+                                                </button>
+                                                <!-- Dropdown menu -->
+                                                <div id="dropdown-Default-{{ $rubber_collected->id }}"
+                                                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                                        aria-labelledby="dropdownDefaultButton-{{ $rubber_collected->id }}">
+                                                        <li>
+                                                            <a href="javascript:void(0)"
+                                                                data-rubber-collected-id={{ $rubber_collected->id }}
+                                                                data-modal-target="rubber-collected-detail-modal"
+                                                                data-modal-toggle="rubber-collected-detail-modal"
+                                                                class="btn-detail block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Lihat
+                                                                Detai</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{{ route('admin.transaction.rubber-collected.show', $rubber_collected->id) }}"
+                                                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

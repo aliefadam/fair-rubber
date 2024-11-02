@@ -39,6 +39,7 @@ class CollectorSeeder extends Seeder
                 "bank_name" => "BCA",
                 "account_number" => "1234567890",
                 "account_name" => "Acip",
+                "tolerance" => 10,
             ],
         );
         Collector::create(
@@ -65,8 +66,8 @@ class CollectorSeeder extends Seeder
                 "bank_name" => "BCA",
                 "account_number" => "1234567890",
                 "account_name" => "Acip",
+                "tolerance" => 10,
             ]
         );
-
     }
 }
